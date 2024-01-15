@@ -1,0 +1,52 @@
+---
+interface Props {
+	code: string;
+	lang?: string;
+}
+
+const { code = "", lang = "ts" } = Astro.props;
+
+import {
+	renderCodeToHTML,
+	runTwoSlash,
+	createShikiHighlighter,
+} from "shiki-twoslash";
+
+const highlighter = await createShikiHighlighter({ theme: "github-light" });
+const twoslash = runTwoSlash(code, lang, {});
+
+const html = renderCodeToHTML(
+	twoslash.code,
+	lang,
+	{ twoslash: true },
+	{
+		themeName: "github",
+		includeJSDocInHover: true,
+	},
+	highlighter,
+	twoslash,
+);
+
+// import {
+//   codeToHtml,
+// } from 'shikiji'
+// import { rendererRich, rendererClassic, transformerTwoSlash } from 'shikiji-twoslash';
+// import "shikiji-twoslash/style-classic.css";
+// import "shikiji-twoslash/style-rich.css";
+
+// const html = await codeToHtml(code, {
+//   lang: 'typescript',
+// 	themes: {
+// 		light: 'github-light',
+// 		dark: 'github-dark',
+// 	},
+// 	transformers: [
+//     transformerTwoSlash({
+// 			explicitTrigger: true,
+// 			renderer: rendererClassic(),
+// 		}),
+// 	],
+// })
+---
+
+<Fragment set:html={html} />

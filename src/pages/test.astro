@@ -1,0 +1,36 @@
+---
+import DefaultLayout from "../layouts/default.astro";
+import Code from "../components/code.astro";
+// import { Code } from 'astro:components';
+---
+
+<DefaultLayout>
+	<h1>Poop</h1>
+
+	<p>TEST</p>
+
+	<Code
+		lang="ts"
+		code={`// @errors: 2554
+import {Exome} from "exome";
+import {useStore} from "exome/react";
+// ---cut---
+class Store extends Exome {}
+
+const store = new Store();
+
+const a = useStore(store);
+
+console.log(a)
+`.trim()}
+	/>
+
+	<Code
+		lang="ts"
+		code={`// @noErrors
+import { type Exome } from "exome";
+// ---cut---
+function useStore<T extends Exome>(store: T): Readonly<T>
+`.trim()}
+	/>
+</DefaultLayout>

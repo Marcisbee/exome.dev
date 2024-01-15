@@ -14,3 +14,12 @@ pre.shiki {
 pre.shiki .language-id {
 	display: none;
 }
+
+pre .code-container a {
+	color: inherit;
+	border-bottom: 1px solid currentColor;
+}
+
+pre.twoslash data-lsp:hover::before {
+	transform: translate(0, 1.2rem);
+}

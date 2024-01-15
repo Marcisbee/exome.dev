@@ -4,6 +4,18 @@ import Code from "../components/code.astro";
 // import { Code } from 'astro:components';
 ---
 
+<script>
+	class DataLsp extends HTMLElement {
+		connectedCallback() {
+			if (this.textContent === 'Exome') {
+				this.innerHTML = `<a href="#exome">${this.textContent}</a>`;
+			}
+		}
+	}
+
+	customElements.define('data-lsp', DataLsp);
+</script>
+
 <DefaultLayout>
 	<h1>Poop</h1>
 
@@ -11,17 +23,22 @@ import Code from "../components/code.astro";
 
 	<Code
 		lang="ts"
-		code={`// @errors: 2554
+		code={`// @noErrors
 import {Exome} from "exome";
 import {useStore} from "exome/react";
 // ---cut---
-class Store extends Exome {}
+import { Exome } from "exome"
 
-const store = new Store();
+// We'll have a store called "CounterStore"
+class CounterStore extends Exome {
+  // Lets set up one property "count" with default value "0"
+  public count = 0
 
-const a = useStore(store);
-
-console.log(a)
+  // Now lets create action that will update "count" value
+  public increment() {
+    this.count += 1
+  }
+}
 `.trim()}
 	/>
 
@@ -31,6 +48,21 @@ console.log(a)
 import { type Exome } from "exome";
 // ---cut---
 function useStore<T extends Exome>(store: T): Readonly<T>
+`.trim()}
+	/>
+
+	<Code
+		lang="ts"
+		code={`// @noErrors
+/**
+ * Runs the checker against a TypeScript/JavaScript code sample returning potentially
+ * difference code, and a set of annotations around how it works.
+ *
+ * @param code The twoslash markup'd code
+ * @param extension For example: "ts", "tsx", "typescript", "javascript" or "js".
+ * @param options Additional options for twoslash
+ */
+export function twoslasher(code: string, extension: string, options: TwoSlashOptions = {}): TwoSlashReturn
 `.trim()}
 	/>
 </DefaultLayout>

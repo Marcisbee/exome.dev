@@ -4,18 +4,6 @@ import Code from "../components/code.astro";
 // import { Code } from 'astro:components';
 ---
 
-<script>
-	class DataLsp extends HTMLElement {
-		connectedCallback() {
-			if (this.textContent === 'Exome') {
-				this.innerHTML = `<a href="#exome">${this.textContent}</a>`;
-			}
-		}
-	}
-
-	customElements.define('data-lsp', DataLsp);
-</script>
-
 <DefaultLayout>
 	<h1>Poop</h1>
 

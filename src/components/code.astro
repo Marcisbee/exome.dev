@@ -49,4 +49,16 @@ const html = renderCodeToHTML(
 // })
 ---
 
+<script>
+	class DataLsp extends HTMLElement {
+		connectedCallback() {
+			if (this.textContent === "Exome") {
+				this.innerHTML = `<a href="#exome">${this.textContent}</a>`;
+			}
+		}
+	}
+
+	customElements.define("data-lsp", DataLsp);
+</script>
+
 <Fragment set:html={html} />

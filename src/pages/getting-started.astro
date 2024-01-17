@@ -1,0 +1,25 @@
+---
+import DefaultLayout from "../layouts/default.astro";
+import PermaTitle from "../components/permatitle.astro";
+import { Code } from "astro:components";
+---
+
+<DefaultLayout>
+	<h1 id="getting-started">Getting Started</h1>
+
+	<PermaTitle title="Install Exome" />
+
+	<p>
+		First things first, download and install <code
+			><a href="" target="_blank" referrerpolicy="no-referrer">exome</a></code
+		> pacakge. It can be installed using npm.
+	</p>
+
+	<p>
+		<pre>npm install exome</pre>
+	</p>
+
+	<PermaTitle title="Your first store" />
+
+	<p>My page content, wrapped in a layout!</p>
+</DefaultLayout>

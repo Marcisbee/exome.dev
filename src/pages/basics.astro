@@ -1,0 +1,208 @@
+---
+import DefaultLayout from "../layouts/default.astro";
+import PermaTitle from "../components/permatitle.astro";
+import Code from "../components/code.astro";
+
+const CODE: Record<string, string> = {};
+---
+
+<DefaultLayout>
+	<h1 id="basics">Basics</h1>
+
+	<PermaTitle title="Stores" />
+
+	<p>
+		Store can be a single class or multiple ones. It's suggested keeping stores
+		small, in terms of property sizes. Any piece of store you have, must use a
+		class that extends Exome.
+	</p>
+
+	<Code
+		lang="ts"
+		code={`// @noErrors
+import { Exome } from "exome"
+
+class TodoStore extends Exome {}
+`.trim()}
+	/>
+
+	<p>
+		Any store can be initialized (multiple times if needed) becoming an instance
+		of a store.
+	</p>
+
+	<Code
+		lang="ts"
+		code={`// @noErrors
+import { Exome } from "exome"
+
+class TodoStore extends Exome {}
+// ---cut---
+const todoStore = new TodoStore()
+`.trim()}
+	/>
+
+	<PermaTitle title="Properties" />
+
+	<p>
+		Remember that this is quite a regular class (with some behind the scenes
+		work). So you can write you data inside properties however you like.
+		Properties can be public, private, object, arrays, getters, setters, static
+		etc. It's all just a value.
+	</p>
+
+	<Code
+		lang="ts"
+		code={`// @noErrors
+import { Exome } from "exome"
+
+class TodoStore extends Exome {
+  public todo: { text: string, done: boolean }[] = []
+}
+`.trim()}
+	/>
+
+	<PermaTitle title="Computed" />
+
+	<p>Computed properties are essentially getters. Not much to it.</p>
+
+	<Code
+		lang="ts"
+		code={`// @noErrors
+import { Exome } from "exome"
+
+class TodoStore extends Exome {
+  public todo: { text: string, done: boolean }[] = []
+
+  public get countDone() {
+    return this.todo.filter(({ done }) => done).length
+  }
+}
+`.trim()}
+	/>
+
+	<PermaTitle title="Actions" />
+
+	<p>
+		Every method in class is considered as an action. They should be only used
+		for changing store instance properties. Whenever any method is called in
+		Exome it triggers update to middleware (e.g. updates UI components). Actions
+		can be regular sync methods and even async ones.
+	</p>
+
+	<Code
+		lang="ts"
+		code={`// @noErrors
+import { Exome } from "exome"
+
+class TodoStore extends Exome {
+  public todo: { text: string, done: boolean }[] = []
+
+  public get countDone() {
+    return this.todo.filter(({ done }) => done).length
+  }
+
+  // addTodo is action
+  public addTodo(todo: TodoStore["todo"][number]) {
+    this.todo.push(todo)
+  }
+}
+`.trim()}
+	/>
+
+	<p>
+		If you want to get something from state via method, use getters or
+		properties as functions (those will not be tracked for changes).
+	</p>
+
+	<Code
+		lang="ts"
+		code={`// @noErrors
+import { Exome } from "exome"
+
+class TodoStore extends Exome {
+  public todo: { text: string, done: boolean }[] = []
+
+  // getTodo is NOT an action if arrow function is used
+  public getTodo = (index: number) => {
+    return this.todo[index]
+  }
+}
+`.trim()}
+	/>
+
+	<p>
+		<code>getTodo</code> is not an action since it's defined as a property. This
+		can be useful to get data by passing some argument. Since getting data doesn't
+		need to trigger updates, no need to define it as action.
+	</p>
+
+	<PermaTitle title="Async Actions" />
+
+	<p>@TODO</p>
+
+	<Code
+		lang="ts"
+		code={`// @noErrors
+import { Exome } from "exome"
+
+class TodoStore extends Exome {
+  public todo: { text: string, done: boolean }[] = []
+
+  public get countDone() {
+    return this.todo.filter(({ done }) => done).length
+  }
+
+  public addTodo(todo: TodoStore["todo"][number]) {
+    this.todo.push(todo)
+  }
+
+  public async fetchTodoList() {
+    this.todo = await fetch(\`data:,[{"text":"Wash dishes",done:true}]\`)
+      .then((res) => res.json())
+  }
+}
+`.trim()}
+	/>
+
+	<PermaTitle title="Effects" />
+
+	<p>@TODO</p>
+
+	<Code
+		lang="ts"
+		code={`// @noErrors
+import { Exome } from "exome"
+
+class TodoStore extends Exome {
+  public todo: { text: string, done: boolean }[] = []
+
+  public get countDone() {
+    return this.todo.filter(({ done }) => done).length
+  }
+
+  public addTodo(todo: TodoStore["todo"][number]) {
+    this.todo.push(todo)
+  }
+
+  public async fetchTodoList() {
+    this.todo = await fetch(\`data:,[{"text":"Wash dishes",done:true}]\`)
+      .then((res) => res.json())
+  }
+}
+// ---cut---
+import { onAction } from "exome"
+
+// Subscribe to any "addTodo" actions in any TodoStore instance
+onAction(TodoStore, "addTodo", (instance, action, [todo]) => {
+  console.log("New item:", todo.text)
+})
+
+
+const todoStore = new TodoStore()
+
+todoStore.addTodo({ text: "Workout", done: false })
+// => "New item: Workout"
+`.trim()}
+	/>
+</DefaultLayout>

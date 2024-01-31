@@ -5,7 +5,7 @@ import logoSvg from "../assets/logo.svg";
 type LinkFromList = ReturnType<typeof nameToPermalink>;
 
 const pathname = new URL(Astro.request.url).pathname;
-const currentPath = pathname.slice(1);
+const currentPath = pathname.split("/")[1];
 
 const links: [LinkFromList, LinkFromList[]][] = [
 	[

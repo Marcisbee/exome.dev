@@ -53,7 +53,7 @@ const html = renderCodeToHTML(
 	class DataLsp extends HTMLElement {
 		connectedCallback() {
 			if (this.textContent === "Exome") {
-				this.innerHTML = `<a href="#exome">${this.textContent}</a>`;
+				this.innerHTML = `<a href="api-reference#exome">${this.textContent}</a>`;
 			}
 		}
 	}

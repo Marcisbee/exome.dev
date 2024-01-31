@@ -58,6 +58,12 @@ h2 {
 
 p {
 	margin: 20px 0;
+
+	& code {
+		background-color: rgba(0, 0, 0, 0.08);
+		padding: 2px 6px;
+		border-radius: 4px;
+	}
 }
 
 h2:not(:hover) .permalink:not(:focus),
@@ -88,4 +94,36 @@ pre {
 	border-radius: 8px;
 	padding: 12px 16px;
 	font-size: 1.08em;
+}
+
+.note {
+	background-color: #fff3e8;
+	color: #7d3c00;
+	padding: 1rem 1rem 1rem 1.7rem;
+	margin-top: 1rem;
+	border-radius: 8px;
+	position: relative;
+
+	&::before {
+		display: block;
+		content: "";
+		left: 8px;
+		top: 8px;
+		bottom: 8px;
+		width: 5px;
+		background-color: #f5841b;
+		border-radius: 10px;
+		position: absolute;
+		z-index: 1;
+	}
+
+	> p:first-child {
+		margin-top: 0;
+	}
+
+	& code {
+		background-color: rgba(255, 255, 255, 0.8);
+		padding: 2px 6px;
+		border-radius: 4px;
+	}
 }

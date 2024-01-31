@@ -10,14 +10,15 @@ const currentPath = pathname.slice(1);
 const links: [LinkFromList, LinkFromList[]][] = [
 	[
 		nameToPermalink("Getting Started"),
-		[
-			nameToPermalink("Install exome"),
-			nameToPermalink("Your first store"),
-		],
+		[nameToPermalink("Install exome"), nameToPermalink("Your first store")],
 	],
 	[
 		nameToPermalink("Tutorials"),
-		[nameToPermalink("Todo App"), nameToPermalink("Cookie Clicker Game")],
+		[
+			nameToPermalink("Todo App"),
+			nameToPermalink("Movie DB app"),
+			nameToPermalink("Cookie Clicker Game"),
+		],
 	],
 	[
 		nameToPermalink("Basics"),
@@ -25,6 +26,8 @@ const links: [LinkFromList, LinkFromList[]][] = [
 			nameToPermalink("Stores"),
 			nameToPermalink("Store values"),
 			nameToPermalink("Actions"),
+			nameToPermalink("Async Actions"),
+			nameToPermalink("Effects"),
 		],
 	],
 	[
@@ -42,12 +45,12 @@ const links: [LinkFromList, LinkFromList[]][] = [
 		],
 	],
 	[
-	 	nameToPermalink("Guides"),
-	 	[
-	 		nameToPermalink("Folder structure"),
-	 		nameToPermalink("Nested stores"),
-	 		nameToPermalink("Testing"),
-	 	],
+		nameToPermalink("Guides"),
+		[
+			nameToPermalink("Folder structure"),
+			nameToPermalink("Nested stores"),
+			nameToPermalink("Testing"),
+		],
 	],
 	[
 		nameToPermalink("API reference"),

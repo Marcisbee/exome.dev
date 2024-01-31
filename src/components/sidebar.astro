@@ -165,7 +165,7 @@ const links: [LinkFromList, LinkFromList[]][] = [
 					<li>
 						<a
 							class:list={{ active: currentPath === h1.url }}
-							href={`/${h1.url}`}
+							href={`/${h1.url}/`}
 						>
 							{h1.name}
 						</a>
@@ -174,7 +174,7 @@ const links: [LinkFromList, LinkFromList[]][] = [
 					<ul class="h2">
 						{h2.map(({ name, url }) => (
 							<li>
-								<a href={`/${h1.url}#${url}`}>{name}</a>
+								<a href={`/${h1.url}/#${url}`}>{name}</a>
 							</li>
 						))}
 					</ul>

@@ -203,7 +203,7 @@ export default defineConfig({
         },
         {
           text: 'Contributing',
-          link: 'https://github.com/Marcisbee/exome/blob/main/CONTRIBUTING.md',
+          link: 'https://github.com/Marcisbee/exome/blob/main/.github/CONTRIBUTING.md',
         },
       ],
     },

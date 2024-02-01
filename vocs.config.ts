@@ -129,6 +129,10 @@ export default defineConfig({
           text: 'Testing',
           link: '/guides/testing',
         },
+        {
+          text: 'Devtools',
+          link: '/guides/devtools',
+        },
       ],
     },
 

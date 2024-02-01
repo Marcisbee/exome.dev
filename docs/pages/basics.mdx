@@ -1,0 +1,137 @@
+# Basics
+
+## Stores
+
+Store can be a single class or multiple ones. It's suggested keeping stores small, in terms of property sizes. Any piece of store you have, must use a class that extends `Exome`.
+
+```ts twoslash
+// @noErrors
+// [!include ~/snippets/basics/store.ts:import]
+
+// [!include ~/snippets/basics/store.ts:classStart]
+// [!include ~/snippets/basics/store.ts:classEnd]
+```
+
+Any store can be initialized (multiple times if needed) becoming an instance of a store.
+
+```ts twoslash
+// @noErrors
+// [!include ~/snippets/basics/store.ts:import]
+
+// [!include ~/snippets/basics/store.ts:classStart]
+// [!include ~/snippets/basics/store.ts:classEnd]
+
+// ---cut---
+const todoStore = new TodoStore()
+```
+
+## Properties
+
+Remember that this is quite a regular class (with some behind the scenes work). So you can write you data inside properties however you like. Properties can be public, private, object, arrays, getters, setters, static etc. It's all just a value.
+
+```ts twoslash
+// @noErrors
+// [!include ~/snippets/basics/store.ts:import]
+
+// [!include ~/snippets/basics/store.ts:classStart]
+  public todo: { text: string, done: boolean }[] = [] // [!code hl] // [!code focus]
+// [!include ~/snippets/basics/store.ts:classEnd]
+```
+
+### Computed Properties
+
+Computed properties are essentially getters. Not much to it.
+
+```ts twoslash
+// @noErrors
+// [!include ~/snippets/basics/store.ts:import]
+
+// [!include ~/snippets/basics/store.ts:classStart]
+// [!include ~/snippets/basics/store.ts:property]
+
+  public get countDone() { // [!code hl] // [!code focus]
+    return this.todo.filter(({ done }) => done).length // [!code hl] // [!code focus]
+  } // [!code hl] // [!code focus]
+// [!include ~/snippets/basics/store.ts:classEnd]
+```
+
+## Actions
+
+Every method in class is considered as an action. They should be only used for changing store instance properties. Whenever any method is called in Exome it triggers update to middleware (e.g. updates UI components). Actions can be regular sync methods and even async ones.
+
+```ts twoslash
+// @noErrors
+// [!include ~/snippets/basics/store.ts:import]
+
+// [!include ~/snippets/basics/store.ts:classStart]
+// [!include ~/snippets/basics/store.ts:property]
+
+// [!include ~/snippets/basics/store.ts:getter]
+
+  public addTodo(todo: TodoStore["todo"][number]) { // [!code hl] // [!code focus]
+    this.todo.push(todo) // [!code hl] // [!code focus]
+  } // [!code hl] // [!code focus]
+// [!include ~/snippets/basics/store.ts:classEnd]
+```
+
+If you want to get something from state via method, use getters or properties as functions (those will not be tracked for changes).
+
+```ts twoslash
+// @noErrors
+// [!include ~/snippets/basics/store.ts:import]
+
+// [!include ~/snippets/basics/store.ts:classStart]
+// [!include ~/snippets/basics/store.ts:property]
+
+// @warn:   `getTodo` is NOT an action if arrow function is used
+
+  public getTodo = (index: number) => { // [!code focus]
+    return this.todo[index] // [!code focus]
+  } // [!code focus]
+// [!include ~/snippets/basics/store.ts:classEnd]
+```
+
+`getTodo` is not an action since it's defined as a property. This can be useful to get data by passing some argument. Since getting data doesn't need to trigger updates, no need to define it as action.
+
+## Async Actions
+
+@TODO
+
+```ts twoslash
+// @noErrors
+// [!include ~/snippets/basics/store.ts:import]
+
+// [!include ~/snippets/basics/store.ts:classStart]
+// [!include ~/snippets/basics/store.ts:property]
+
+  public async fetchTodoList() { // [!code hl] // [!code focus]
+    this.todo = await fetch(`data:,[{"text":"Wash dishes",done:true}]`) // [!code hl] // [!code focus]
+      .then((res) => res.json()) // [!code hl] // [!code focus]
+  } // [!code hl] // [!code focus]
+// [!include ~/snippets/basics/store.ts:classEnd]
+```
+
+## Effects
+
+@TODO
+
+```ts twoslash
+// @noErrors
+// [!include ~/snippets/basics/store.ts:import]
+
+// [!include ~/snippets/basics/store.ts:classStart]
+// [!include ~/snippets/basics/store.ts:property]
+// [!include ~/snippets/basics/store.ts:action]
+// [!include ~/snippets/basics/store.ts:classEnd]
+// ---cut---
+import { onAction } from "exome"
+
+onAction(TodoStore, "addTodo", (instance, action, [todo]) => { // [!code hl] // [!code focus]
+  console.log("New item:", todo.text) // [!code hl] // [!code focus]
+}) // [!code hl] // [!code focus]
+
+const todoStore = new TodoStore()
+
+todoStore.addTodo({ text: "Workout", done: false })
+// @log: log: "New item: Workout"
+```

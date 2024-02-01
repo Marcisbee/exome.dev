@@ -1,0 +1,25 @@
+.vocs_HomePage_logo {
+  height: 66px !important;
+}
+
+.footer {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5em;
+  margin-top: 5rem;
+  width: 100%;
+}
+
+.landing-code {
+	max-width: 270px;
+	width: 100%;
+	text-align: center;
+}
+
+.landing-code .vocs_Tabs_list {
+	display: flex;
+	justify-content: center;
+}

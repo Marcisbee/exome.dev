@@ -1,0 +1,45 @@
+---
+title: Exome – State manager
+layout: landing
+showLogo: false
+---
+
+import { HomePage } from 'vocs/components'
+
+import { Footer } from '../components/footer.tsx'
+
+<HomePage.Root>
+  <HomePage.Logo />
+  <HomePage.Tagline>State manager for deeply nested states</HomePage.Tagline>
+
+<div className="landing-code">
+:::code-group
+
+```bash [npm]
+npm install exome
+```
+
+```bash [yarn]
+yarn add exome
+```
+
+```bash [pnpm]
+pnpm add exome
+```
+
+```bash [bun]
+bun add exome
+```
+
+:::
+</div>
+
+  <HomePage.Description>Exome includes integration for React, Preact, Vue, Svelte, Solid, Lit, Rxjs, Angular & No framework. Can be easily used in microfrontends architecture.</HomePage.Description>
+  <HomePage.Buttons>
+    <HomePage.Button href="/getting-started" variant="accent">Get started</HomePage.Button>
+    <HomePage.Button href="https://github.com/Marcisbee/exome">GitHub</HomePage.Button>
+  </HomePage.Buttons>
+</HomePage.Root>
+
+
+<Footer />

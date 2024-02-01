@@ -1,0 +1,73 @@
+# Getting Started
+
+## Install Exome
+
+First things first, download and install [`exome`](https://www.npmjs.com/package/exome) pacakge. It can be installed using npm.
+
+```bash [Terminal]
+npm install exome
+```
+
+## Your first store
+
+To create a new store, just build a new class and extend it from `Exome`. This will make all the necessary setup for state to be listen for actions.
+
+For example create a new counter store, that will have two synchronous actions `increment` and `decrement` that will change value for `count` property.
+
+:::tip
+There are a few recommendations on how to organize stores:
+- keep each store in a separate file to minimize file sizes;
+- name files with `*.store.ts` extension to easily find store files;
+- name stores in PascalCase ending with `*Store` to better distinguish them from components;
+Note that these are only recommendations and nothing is forced! You can chose to ignore them.
+:::
+
+Create a new store file `counter.store.ts` and fill it with our first store:
+
+```ts twoslash [counter.store.ts] counter.store.ts
+// @noErrors
+// @filename: counter.store.ts
+// ---cut---
+// [!include ~/snippets/counter/counter.store.ts]
+```
+
+Now that we have this first store, we can initialize it just like any other class to use it. We can do it in the same file if it's single global store where a lot of different parts need to access it. But if we expect there to be many counters, we can do it wherever we need it.
+
+In this case we want many counters so lets initialize one of them in `index.ts`.
+
+```ts twoslash [index.ts] index.ts
+// @noErrors
+// @filename: index.ts
+// ---cut---
+// [!include ~/snippets/counter/index.ts]
+```
+
+For now this is not the impressive, currently there's nothing that listens to changes in that instance. So lets do that now using react integration. We'll use jsx in this example so we need to rename `index.ts` file to `index.tsx`.
+
+```tsx twoslash [index.tsx] index.tsx
+// @noErrors
+// @filename: index.tsx
+// ---cut---
+// [!include ~/snippets/counter/index.tsx]
+```
+
+Actions don't have to be called in the same component to trigger updates. For example adding this outside the component will update it too:
+
+```ts twoslash
+// @noErrors
+// [!include ~/snippets/counter/index.ts]
+// ---cut---
+setInterval(counterStore.increment, 1000);
+```
+
+[Live Preview](https://dune.land/dune/468e79c1-e31b-4035-bc19-b03dfa363060)
+
+And there you have it, your first basic store.
+
+:::tip
+There's way more that can be achieved with exome, but this is bare minimum example of what's possible. For example store instance can contain other store instances in as big of a depth as necessary.
+
+Use exome with any UI framework. Even share state between them at the same time. Or use it as a event listener in vanilla or canvas land.
+
+[Live Preview](https://codesandbox.io/p/sandbox/vue-exome-lchcp)
+:::

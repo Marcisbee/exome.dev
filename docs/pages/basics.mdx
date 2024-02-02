@@ -25,6 +25,25 @@ Any store can be initialized (multiple times if needed) becoming an instance of 
 const todoStore = new TodoStore()
 ```
 
+#### Listen to changes
+
+There are multiple ways to listen to changes in store, but one default method is subscribing to store instance using `subscribe` method.
+
+```ts twoslash
+// @noErrors
+import { subscribe } from "exome"
+// [!include ~/snippets/basics/store.ts:import]
+
+// [!include ~/snippets/basics/store.ts:classStart]
+// [!include ~/snippets/basics/store.ts:classEnd]
+
+const todoStore = new TodoStore()
+// ---cut---
+subscribe(todoStore, () => {
+  console.log("todoStore had changes")
+})
+```
+
 ## Properties
 
 Remember that this is quite a regular class (with some behind the scenes work). So you can write you data inside properties however you like. Properties can be public, private, object, arrays, getters, setters, static etc. It's all just a value.
@@ -38,9 +57,7 @@ Remember that this is quite a regular class (with some behind the scenes work). 
 // [!include ~/snippets/basics/store.ts:classEnd]
 ```
 
-### Computed Properties
-
-Computed properties are essentially getters. Not much to it.
+For dynamic/computed properties you can easily use getters:
 
 ```ts twoslash
 // @noErrors
@@ -65,8 +82,6 @@ Every method in class is considered as an action. They should be only used for c
 
 // [!include ~/snippets/basics/store.ts:classStart]
 // [!include ~/snippets/basics/store.ts:property]
-
-// [!include ~/snippets/basics/store.ts:getter]
 
   public addTodo(todo: TodoStore["todo"][number]) { // [!code hl] // [!code focus]
     this.todo.push(todo) // [!code hl] // [!code focus]
@@ -95,7 +110,7 @@ If you want to get something from state via method, use getters or properties as
 
 ## Async Actions
 
-@TODO
+Async actions are async methods. These are methods that return Promise. Update for instance is issued only after this Promise is fulfilled or rejected.
 
 ```ts twoslash
 // @noErrors
@@ -111,9 +126,47 @@ If you want to get something from state via method, use getters or properties as
 // [!include ~/snippets/basics/store.ts:classEnd]
 ```
 
+#### Getting Action Status
+
+Every action can have a special utility applied. This especially useful for async actions as the utility `getActionStatus` provides loading and error state for particular actions.
+
+```ts twoslash
+// @noErrors
+// [!include ~/snippets/basics/store.ts:import]
+import { getActionStatus } from "exome/utils" // [!code hl] // [!code focus]
+
+// [!include ~/snippets/basics/store.ts:classStart]
+// [!include ~/snippets/basics/store.ts:property]
+
+  public get status() { // [!code hl] // [!code focus]
+    return getActionStatus(this, "fetchTodoList"); // [!code hl] // [!code focus]
+  } // [!code hl] // [!code focus]
+
+  public async fetchTodoList() { // [!code focus]
+    this.todo = await fetch(`data:,[{"text":"Wash dishes",done:true}]`) // [!code focus]
+      .then((res) => res.json()) // [!code focus]
+  } // [!code focus]
+// [!include ~/snippets/basics/store.ts:classEnd]
+```
+
+Use it in a getter as it returns cached object with this interface:
+
+```ts twoslash
+// @noErrors
+interface ActionStatus<E = Error> {
+  loading: boolean
+  error: false | E
+  unsubscribe: () => void
+}
+```
+
+- `loading` - if action is in progress;
+- `error` - if and what did the action throw;
+- `unsubscribe` - stop listening to this status.
+
 ## Effects
 
-@TODO
+Effects are a great way to do something extra based on actions called. For example to implement logging. Or sending & receiving state from and to server.
 
 ```ts twoslash
 // @noErrors
@@ -126,12 +179,39 @@ If you want to get something from state via method, use getters or properties as
 // ---cut---
 import { onAction } from "exome"
 
-onAction(TodoStore, "addTodo", (instance, action, [todo]) => { // [!code hl] // [!code focus]
-  console.log("New item:", todo.text) // [!code hl] // [!code focus]
+onAction(TodoStore, "addTodo", (instance, action, args) => { // [!code hl] // [!code focus]
+  console.log("New item:", args[0].text) // [!code hl] // [!code focus]
+  console.log("Item count:", instance.todo.length) // [!code hl] // [!code focus]
 }) // [!code hl] // [!code focus]
 
 const todoStore = new TodoStore()
 
 todoStore.addTodo({ text: "Workout", done: false })
 // @log: log: "New item: Workout"
+// @log: log: "Item count: 1"
+```
+
+By default all `onAction` callbacks are being called after action is finished. But it's possible to trigger callback before action is triggered too.
+
+```ts twoslash
+// @noErrors
+import { onAction } from "exome"
+// [!include ~/snippets/basics/store.ts:import]
+
+// [!include ~/snippets/basics/store.ts:classStart]
+// [!include ~/snippets/basics/store.ts:property]
+// [!include ~/snippets/basics/store.ts:action]
+// [!include ~/snippets/basics/store.ts:classEnd]
+// ---cut---
+onAction(TodoStore, "addTodo", (instance, action, args) => { // [!code focus]
+  console.log("New item:", args[0].text) // [!code focus]
+  console.log("Item count:", instance.todo.length) // [!code focus]
+}, "before") // [!code focus]
+// ^^^^^^^^
+
+const todoStore = new TodoStore()
+
+todoStore.addTodo({ text: "Workout", done: false })
+// @log: log: "New item: Workout"
+// @log: log: "Item count: 0"
 ```

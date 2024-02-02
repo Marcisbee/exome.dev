@@ -9,12 +9,6 @@ class TodoStore extends Exome {
   public todo: { text: string, done: boolean }[] = []
 // [!endregion property]
 
-// [!region getter]
-  public get countDone() {
-    return this.todo.filter(({ done }) => done).length
-  }
-// [!endregion getter]
-
 // [!region action]
   public addTodo(todo: TodoStore["todo"][number]) {
     this.todo.push(todo)

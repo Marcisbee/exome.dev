@@ -27,6 +27,7 @@ export default defineConfig({
       text: 'Getting Started',
       link: '/getting-started',
     },
+
     {
       text: 'Basics',
       link: '/basics',
@@ -55,19 +56,42 @@ export default defineConfig({
     },
 
     {
+      text: 'Advanced',
+      link: '/advanced',
+      items: [
+        {
+          text: '@TODO: Middleware',
+          // link: '/advanced/#middleware',
+        },
+        {
+          text: '@TODO: Update',
+          // link: '/advanced/#update',
+        },
+        {
+          text: '@TODO: Save & Load',
+          // link: '/advanced/#save-load',
+        },
+        {
+          text: '@TODO: Get instance id',
+          // link: '/advanced/#get-instance-id',
+        },
+      ],
+    },
+
+    {
       text: 'Tutorials',
       items: [
         {
-          text: 'Todo App',
-          link: '/tutorials/todo-app',
+          text: '@TODO: Todo App',
+          // link: '/tutorials/todo-app',
         },
         {
-          text: 'Movie DB app',
-          link: '/tutorials/todo-app',
+          text: '@TODO: Movie DB app',
+          // link: '/tutorials/todo-app',
         },
         {
-          text: 'Cookie Clicker Game',
-          link: '/tutorials/cookie-clicker-game',
+          text: '@TODO: Cookie Clicker Game',
+          // link: '/tutorials/cookie-clicker-game',
         },
       ],
     },
@@ -76,40 +100,40 @@ export default defineConfig({
       text: 'Integration',
       items: [
         {
-          text: 'React',
-          link: '/integration/react',
+          text: '@TODO: React',
+          // link: '/integration/react',
         },
         {
-          text: 'Preact',
-          link: '/integration/preact',
+          text: '@TODO: Preact',
+          // link: '/integration/preact',
         },
         {
-          text: 'Vue',
-          link: '/integration/vue',
+          text: '@TODO: Vue',
+          // link: '/integration/vue',
         },
         {
-          text: 'Svelte',
-          link: '/integration/svelte',
+          text: '@TODO: Svelte',
+          // link: '/integration/svelte',
         },
         {
-          text: 'Solid',
-          link: '/integration/solid',
+          text: '@TODO: Solid',
+          // link: '/integration/solid',
         },
         {
-          text: 'Lit',
-          link: '/integration/lit',
+          text: '@TODO: Lit',
+          // link: '/integration/lit',
         },
         {
-          text: 'Rxjs',
-          link: '/integration/rxjs',
+          text: '@TODO: Rxjs',
+          // link: '/integration/rxjs',
         },
         {
-          text: 'Angular',
-          link: '/integration/angular',
+          text: '@TODO: Angular',
+          // link: '/integration/angular',
         },
         {
-          text: 'No framework',
-          link: '/integration/vanilla',
+          text: '@TODO: No framework',
+          // link: '/integration/vanilla',
         },
       ],
     },
@@ -118,20 +142,20 @@ export default defineConfig({
       text: 'Guides',
       items: [
         {
-          text: 'Folder structure',
-          link: '/guides/folder-structure',
+          text: '@TODO: Folder structure',
+          // link: '/guides/folder-structure',
         },
         {
-          text: 'Nested stores',
-          link: '/guides/nested-stores',
+          text: '@TODO: Nested stores',
+          // link: '/guides/nested-stores',
         },
         {
-          text: 'Testing',
-          link: '/guides/testing',
+          text: '@TODO: Testing',
+          // link: '/guides/testing',
         },
         {
-          text: 'Devtools',
-          link: '/guides/devtools',
+          text: '@TODO: Devtools',
+          // link: '/guides/devtools',
         },
       ],
     },

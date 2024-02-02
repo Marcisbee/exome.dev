@@ -1,0 +1,170 @@
+# exome
+
+```ts twoslash
+// @noErrors
+import {
+  Exome,
+  subscribe,
+  update,
+  updateAll,
+  onAction,
+  getExomeId,
+  setExomeId,
+  addMiddleware,
+  runMiddleware,
+  type Middleware
+} from "exome";
+```
+
+<div className="api-explore">
+
+<p className="api-explore-comment">
+Class that every store extends from.
+</p>
+```ts twoslash
+// @noErrors
+// ---cut---
+class Exome {
+  constructor();
+}
+```
+
+<br />
+---
+
+<p className="api-explore-comment">
+Subscribe to store instance update events.
+</p>
+```ts twoslash
+// @noErrors
+import { Exome } from "exome";
+type Unsubscribe = () => void
+// ---cut---
+function subscribe<T extends Exome>(
+  store: T,
+  callback: (store: T) => void,
+): Unsubscribe
+```
+
+<br />
+---
+
+<p className="api-explore-comment">
+Sends update event to specific store instance.
+</p>
+```ts twoslash
+// @noErrors
+import { Exome } from "exome";
+// ---cut---
+function update(store: Exome): void
+```
+
+<br />
+---
+
+<p className="api-explore-comment">
+Sends update event to all existing store instances.
+</p>
+```ts twoslash
+// @noErrors
+// ---cut---
+function updateAll(): void
+```
+
+<br />
+---
+
+<p className="api-explore-comment">
+Listens to specific actions for all instances of particular store.
+</p>
+```ts twoslash
+// @noErrors
+import { Exome } from "exome";
+type Unsubscribe = () => void;
+// ---cut---
+function onAction<T extends Exome>(
+  Target: new () => T,
+  action: "NEW" | "LOAD_STATE" | keyof T | null,
+  callback: (
+    instance: T,
+    action: "NEW" | "LOAD_STATE" | keyof T,
+    payload: any[],
+    error?: Error
+  ) => void,
+  type?: "before" | "after",
+): Unsubscribe
+```
+
+<br />
+---
+
+<p className="api-explore-comment">
+Gets unique id of specific store instance.
+</p>
+```ts twoslash
+// @noErrors
+import { Exome } from "exome";
+// ---cut---
+function getExomeId(store: Exome): string
+```
+
+<br />
+---
+
+<p className="api-explore-comment">
+Sets custom id to specific store instance.
+</p>
+```ts twoslash
+// @noErrors
+import { Exome } from "exome";
+// ---cut---
+function setExomeId(store: Exome, id: string): string
+```
+
+<br />
+---
+
+<p className="api-explore-comment">
+Listens to middleware calls for any store instance.
+</p>
+```ts twoslash
+// @noErrors
+import { type Middleware } from "exome";
+type Unsubscribe = () => void;
+// ---cut---
+function addMiddleware(fn: Middleware): Unsubscribe
+```
+
+<br />
+---
+
+<p className="api-explore-comment">
+Triggers middleware for particular store instance to be called. When return function gets called, it maks that the middleware action was completed with or without errors.
+</p>
+```ts twoslash
+// @noErrors
+import { Exome, type Middleware } from "exome";
+type Unsubscribe = () => void;
+// ---cut---
+function runMiddleware(
+  instance: Exome,
+  action: string,
+  payload: any[],
+): (error?: Error) => void;
+```
+
+<br />
+---
+
+```ts twoslash
+// @noErrors
+import { Exome } from "exome";
+// ---cut---
+type Middleware = (
+  instance: Exome,
+  action: string,
+  payload: any[],
+) => void | ((error?: Error) => void);
+```
+
+</div>

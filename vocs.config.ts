@@ -1,248 +1,248 @@
-import { defineConfig } from 'vocs'
+import { defineConfig } from "vocs";
 
-import exome from 'exome/package.json' assert { type: "json" }
+import exome from "exome/package.json" assert { type: "json" };
 
 export default defineConfig({
-  title: 'Exome',
-  iconUrl: {
-    light: '/icon.svg',
-    dark: '/icon.svg',
-  },
-  logoUrl: {
-    light: '/logo-title-dark.svg',
-    dark: '/logo-title-light.svg',
-  },
-  socials: [
-    {
-      icon: 'github',
-      link: 'https://github.com/Marcisbee/exome',
-    },
-    {
-      icon: 'x',
-      link: 'https://twitter.com/marcisbee',
-    },
-  ],
-  sidebar: [
-    {
-      text: 'Getting Started',
-      link: '/getting-started',
-    },
+	title: "Exome",
+	iconUrl: {
+		light: "/icon.svg",
+		dark: "/icon.svg",
+	},
+	logoUrl: {
+		light: "/logo-title-dark.svg",
+		dark: "/logo-title-light.svg",
+	},
+	socials: [
+		{
+			icon: "github",
+			link: "https://github.com/Marcisbee/exome",
+		},
+		{
+			icon: "x",
+			link: "https://twitter.com/marcisbee",
+		},
+	],
+	sidebar: [
+		{
+			text: "Getting Started",
+			link: "/getting-started",
+		},
 
-    {
-      text: 'Basics',
-      link: '/basics',
-      items: [
-        {
-          text: 'Stores',
-          link: '/basics/#stores',
-        },
-        {
-          text: 'Properties',
-          link: '/basics/#properties',
-        },
-        {
-          text: 'Actions',
-          link: '/basics/#actions',
-        },
-        {
-          text: 'Async Actions',
-          link: '/basics/#async-actions',
-        },
-        {
-          text: 'Effects',
-          link: '/basics/#effects',
-        },
-      ],
-    },
+		{
+			text: "Basics",
+			link: "/basics",
+			items: [
+				{
+					text: "Stores",
+					link: "/basics/#stores",
+				},
+				{
+					text: "Properties",
+					link: "/basics/#properties",
+				},
+				{
+					text: "Actions",
+					link: "/basics/#actions",
+				},
+				{
+					text: "Async Actions",
+					link: "/basics/#async-actions",
+				},
+				{
+					text: "Effects",
+					link: "/basics/#effects",
+				},
+			],
+		},
 
-    {
-      text: 'Advanced',
-      link: '/advanced',
-      items: [
-        {
-          text: '@TODO: Middleware',
-          // link: '/advanced/#middleware',
-        },
-        {
-          text: '@TODO: Update',
-          // link: '/advanced/#update',
-        },
-        {
-          text: '@TODO: Save & Load',
-          // link: '/advanced/#save-load',
-        },
-        {
-          text: '@TODO: Get instance id',
-          // link: '/advanced/#get-instance-id',
-        },
-      ],
-    },
+		{
+			text: "Advanced",
+			link: "/advanced",
+			items: [
+				{
+					text: "@TODO: Middleware",
+					// link: '/advanced/#middleware',
+				},
+				{
+					text: "@TODO: Update",
+					// link: '/advanced/#update',
+				},
+				{
+					text: "@TODO: Save & Load",
+					// link: '/advanced/#save-load',
+				},
+				{
+					text: "@TODO: Get instance id",
+					// link: '/advanced/#get-instance-id',
+				},
+			],
+		},
 
-    {
-      text: 'Tutorials',
-      items: [
-        {
-          text: '@TODO: Todo App',
-          // link: '/tutorials/todo-app',
-        },
-        {
-          text: '@TODO: Movie DB app',
-          // link: '/tutorials/todo-app',
-        },
-        {
-          text: '@TODO: Cookie Clicker Game',
-          // link: '/tutorials/cookie-clicker-game',
-        },
-      ],
-    },
+		{
+			text: "Tutorials",
+			items: [
+				{
+					text: "@TODO: Todo App",
+					// link: '/tutorials/todo-app',
+				},
+				{
+					text: "@TODO: Movie DB app",
+					// link: '/tutorials/todo-app',
+				},
+				{
+					text: "@TODO: Cookie Clicker Game",
+					// link: '/tutorials/cookie-clicker-game',
+				},
+			],
+		},
 
-    {
-      text: 'Integration',
-      items: [
-        {
-          text: '@TODO: React',
-          // link: '/integration/react',
-        },
-        {
-          text: '@TODO: Preact',
-          // link: '/integration/preact',
-        },
-        {
-          text: '@TODO: Vue',
-          // link: '/integration/vue',
-        },
-        {
-          text: '@TODO: Svelte',
-          // link: '/integration/svelte',
-        },
-        {
-          text: '@TODO: Solid',
-          // link: '/integration/solid',
-        },
-        {
-          text: '@TODO: Lit',
-          // link: '/integration/lit',
-        },
-        {
-          text: '@TODO: Rxjs',
-          // link: '/integration/rxjs',
-        },
-        {
-          text: '@TODO: Angular',
-          // link: '/integration/angular',
-        },
-        {
-          text: '@TODO: No framework',
-          // link: '/integration/vanilla',
-        },
-      ],
-    },
+		{
+			text: "Integration",
+			items: [
+				{
+					text: "@TODO: React",
+					// link: '/integration/react',
+				},
+				{
+					text: "@TODO: Preact",
+					// link: '/integration/preact',
+				},
+				{
+					text: "@TODO: Vue",
+					// link: '/integration/vue',
+				},
+				{
+					text: "@TODO: Svelte",
+					// link: '/integration/svelte',
+				},
+				{
+					text: "@TODO: Solid",
+					// link: '/integration/solid',
+				},
+				{
+					text: "@TODO: Lit",
+					// link: '/integration/lit',
+				},
+				{
+					text: "@TODO: Rxjs",
+					// link: '/integration/rxjs',
+				},
+				{
+					text: "@TODO: Angular",
+					// link: '/integration/angular',
+				},
+				{
+					text: "@TODO: No framework",
+					// link: '/integration/vanilla',
+				},
+			],
+		},
 
-    {
-      text: 'Guides',
-      items: [
-        {
-          text: '@TODO: Folder structure',
-          // link: '/guides/folder-structure',
-        },
-        {
-          text: '@TODO: Nested stores',
-          // link: '/guides/nested-stores',
-        },
-        {
-          text: '@TODO: Testing',
-          // link: '/guides/testing',
-        },
-        {
-          text: '@TODO: Devtools',
-          // link: '/guides/devtools',
-        },
-      ],
-    },
+		{
+			text: "Guides",
+			items: [
+				{
+					text: "@TODO: Folder structure",
+					// link: '/guides/folder-structure',
+				},
+				{
+					text: "@TODO: Nested stores",
+					// link: '/guides/nested-stores',
+				},
+				{
+					text: "@TODO: Testing",
+					// link: '/guides/testing',
+				},
+				{
+					text: "@TODO: Devtools",
+					// link: '/guides/devtools',
+				},
+			],
+		},
 
-    {
-      text: 'API reference',
-      collapsed: true,
-      items: [
-        {
-          text: 'exome',
-          link: '/api/exome',
-        },
-        {
-          text: 'exome/devtools',
-          link: '/api/devtools',
-        },
-        {
-          text: 'exome/ghost',
-          link: '/api/ghost',
-        },
-        {
-          text: 'exome/state',
-          link: '/api/state',
-        },
-        {
-          text: 'exome/utils',
-          link: '/api/utils',
-        },
-        {
-          text: 'exome/react',
-          link: '/api/react',
-        },
-        {
-          text: 'exome/preact',
-          link: '/api/preact',
-        },
-        {
-          text: 'exome/vue',
-          link: '/api/vue',
-        },
-        {
-          text: 'exome/lit',
-          link: '/api/lit',
-        },
-        {
-          text: 'exome/rxjs',
-          link: '/api/rxjs',
-        },
-        {
-          text: 'exome/svelte',
-          link: '/api/svelte',
-        },
-        {
-          text: 'exome/solid',
-          link: '/api/solid',
-        },
-        {
-          text: 'exome/angular',
-          link: '/api/angular',
-        },
-      ],
-    },
-  ],
-  topNav: [
-    { text: 'Guide & API', link: '/getting-started' },
-    // { text: 'Blog', link: '/blog' },
-    {
-      text: exome.version,
-      items: [
-        {
-          text: 'Changelog',
-          link: 'https://github.com/Marcisbee/exome/blob/main/CHANGELOG.md',
-        },
-        {
-          text: 'Contributing',
-          link: 'https://github.com/Marcisbee/exome/blob/main/.github/CONTRIBUTING.md',
-        },
-      ],
-    },
-  ],
-  twoslash: {
-    compilerOptions: {
-      paths: {
-        // Source - reference source files so we don't need to build packages to get types (speeds things up)
-        vocs: ['./src'],
-        'vocs/*': ['./src/*'],
-      },
-    },
-  },
-})
+		{
+			text: "API reference",
+			collapsed: true,
+			items: [
+				{
+					text: "exome",
+					link: "/api/exome",
+				},
+				{
+					text: "exome/devtools",
+					link: "/api/devtools",
+				},
+				{
+					text: "exome/utils",
+					link: "/api/utils",
+				},
+				{
+					text: "exome/state",
+					link: "/api/state",
+				},
+				{
+					text: "exome/ghost",
+					link: "/api/ghost",
+				},
+				{
+					text: "exome/react",
+					link: "/api/react",
+				},
+				{
+					text: "exome/preact",
+					link: "/api/preact",
+				},
+				{
+					text: "exome/vue",
+					link: "/api/vue",
+				},
+				{
+					text: "exome/lit",
+					link: "/api/lit",
+				},
+				{
+					text: "exome/rxjs",
+					link: "/api/rxjs",
+				},
+				{
+					text: "exome/svelte",
+					link: "/api/svelte",
+				},
+				{
+					text: "exome/solid",
+					link: "/api/solid",
+				},
+				{
+					text: "exome/angular",
+					link: "/api/angular",
+				},
+			],
+		},
+	],
+	topNav: [
+		{ text: "Guide & API", link: "/getting-started" },
+		// { text: 'Blog', link: '/blog' },
+		{
+			text: exome.version,
+			items: [
+				{
+					text: "Changelog",
+					link: "https://github.com/Marcisbee/exome/blob/main/CHANGELOG.md",
+				},
+				{
+					text: "Contributing",
+					link: "https://github.com/Marcisbee/exome/blob/main/.github/CONTRIBUTING.md",
+				},
+			],
+		},
+	],
+	twoslash: {
+		compilerOptions: {
+			paths: {
+				// Source - reference source files so we don't need to build packages to get types (speeds things up)
+				vocs: ["./src"],
+				"vocs/*": ["./src/*"],
+			},
+		},
+	},
+});

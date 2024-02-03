@@ -72,8 +72,8 @@ export default defineConfig({
 					link: '/advanced/#save--load',
 				},
 				{
-					text: "@TODO: Get instance id",
-					link: '/advanced/#get-instance-id',
+					text: "Instance id",
+					link: '/advanced/#instance-id',
 				},
 			],
 		},

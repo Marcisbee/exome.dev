@@ -213,6 +213,109 @@ registerLoadable({
 })
 ```
 
-## Get instance id
+## Instance id
 
-@TODO
+Each store instance is assigned a unique id that can be accessed via `getExomeId` function.
+
+```ts twoslash
+// @noErrors
+import { Exome, getExomeId } from "exome"
+
+class UserStore extends Exome {
+  constructor(
+    public name: string
+  ) {
+    super()
+  }
+
+  public rename(name: string) {
+    this.name = name
+  }
+}
+
+const userStore = new UserStore()
+
+// @log: "UserStore-LS5WUJPF17SF"
+getExomeId(userStore)
+```
+
+This can be very useful for identifying multiple instances from the same store. This can also be used as key in react element list.
+
+```tsx twoslash
+// @noErrors
+import { Exome, getExomeId } from "exome"
+import { useStore } from "exome/react"
+
+class UserStore extends Exome {
+  constructor(
+    public name: string
+  ) {
+    super()
+  }
+
+  public rename(name: string) {
+    this.name = name
+  }
+}
+// ---cut---
+class UserListStore extends Exome {
+  constructor(
+    public users: UserStore[] = []
+  ) {
+    super()
+  }
+}
+
+const userListStore = new UserListStore([
+  new UserStore("John"),
+  new UserStore("Jane"),
+])
+
+function App() {
+  const { users } = useStore(userListStore)
+
+  return (
+    <ul>
+      {users.map((userStore) => (
+        <li key={getExomeId(userStore)}> // [!code hl]
+          {userStore.name}
+        </li>
+      ))}
+    </ul>
+  )
+}
+```
+
+For more control over this id you can use `setExomeId` function to set the id yourself if you need it.
+
+
+```tsx twoslash
+// @noErrors
+import { Exome, getExomeId } from "exome"
+import { useStore } from "exome/react"
+
+class UserStore extends Exome {
+  constructor(
+    public name: string
+  ) {
+    super()
+  }
+
+  public rename(name: string) {
+    this.name = name
+  }
+}
+// ---cut---
+import { setExomeId } from "exome"
+
+const userStore = new UserStore("John")
+
+// @log: "UserStore-LS5WUJPF17SF"
+getExomeId(userStore)
+
+setExomeId(userStore, "CUSTOM")
+
+// @log: "UserStore-CUSTOM"
+getExomeId(userStore)
+```
+

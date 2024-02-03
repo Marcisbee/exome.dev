@@ -1,0 +1,55 @@
+# devtools
+
+```ts twoslash
+// @noErrors
+import {
+  exomeReduxDevtools,
+  unstableExomeDevtools
+} from "exome/devtools";
+```
+
+<div className="api-explore">
+
+<p className="api-explore-comment">
+Subscribes to [Redux DevTools](https://chromewebstore.google.com/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd).
+</p>
+```ts twoslash
+// @noErrors
+import { Middleware } from "exome";
+import { exomeReduxDevtools as source } from "exome/devtools";
+type ReduxDevtoolsConfig = Parameters<typeof source>[0]
+// ---cut---
+function exomeReduxDevtools({
+  name,
+  maxAge,
+  actionsBlacklist,
+}: ReduxDevtoolsConfig): Middleware;
+```
+
+<br />
+---
+
+<p className="api-explore-comment">
+Subscribes to [Exome Developer Tools](https://chromewebstore.google.com/detail/exome-developer-tools/pcanmpamoedhpfpbjajlkpicbikbnhdg).
+</p>
+```ts twoslash
+// @noErrors
+import { Middleware } from "exome";
+import { unstableExomeDevtools as source } from "exome/devtools";
+type ExomeDevtoolsConfig = Parameters<typeof source>[0]
+// ---cut---
+function unstableExomeDevtools({
+  name,
+  maxAge,
+  ignoreListActions,
+  ignoreListStores,
+}: ExomeDevtoolsConfig): Middleware;
+```
+
+<br />
+
+:::tip[NOTE]
+Exome devtools is currently in alpha and may not be stable.
+:::
+
+</div>

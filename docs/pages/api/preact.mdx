@@ -1,10 +1,10 @@
-# react
+# preact
 
 ```ts twoslash
 // @noErrors
 import {
   useStore
-} from "exome/react";
+} from "exome/preact";
 ```
 
 <div className="api-explore">
@@ -23,10 +23,9 @@ function useStore<T extends Exome>(store: T): Readonly<T>;
 
 ```tsx twoslash [example.tsx]
 // @noErrors
-import React from "react";
 // ---cut---
-import { useStore } from "exome/react"
-//                       ^^^^^^^^^^^^^
+import { useStore } from "exome/preact"
+//                       ^^^^^^^^^^^^^^
 import { counterStore } from "./counter.store.ts"
 
 function App() {

@@ -1,10 +1,10 @@
-# react
+# solid
 
 ```ts twoslash
 // @noErrors
 import {
   useStore
-} from "exome/react";
+} from "exome/solid";
 ```
 
 <div className="api-explore">
@@ -23,16 +23,15 @@ function useStore<T extends Exome>(store: T): Readonly<T>;
 
 ```tsx twoslash [example.tsx]
 // @noErrors
-import React from "react";
 // ---cut---
-import { useStore } from "exome/react"
+import { useStore } from "exome/solid"
 import { counterStore } from "./counter.store.ts"
 
 function App() {
-  const { count, increment } = useStore(counterStore)
+  const count = useStore(counter, s => s.count)
 
   return (
-    <button onClick={increment}>{count}</button>
+    <button onClick={counter.increment}>{count}</button>
   );
 }
 ```

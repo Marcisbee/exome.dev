@@ -83,7 +83,7 @@ export default defineConfig({
 			link: "/guides",
 			items: [
 				{
-					text: "@TODO: Folder structure",
+					text: "Folder structure",
 					link: "/guides#folder-structure",
 				},
 				{

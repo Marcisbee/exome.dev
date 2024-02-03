@@ -1,7 +1,50 @@
 # Guides
 
 ## Folder structure
-@TODO
+There are no rules on how to structure stores, but working with exome for couple of years now across multiple very large projects I can make some suggestions:
+
+1. Try to make 1 file per store;
+2. Try to name store files ending with `*.store.ts`, `*.store.js`;
+
+```txt
+user.store.ts
+user-list.store.ts
+```
+
+3. Try to name stores ending with `*Store`;
+    - It's easy to confuse store names with component names later.
+
+```ts
+class UserStore extends Exome {}
+class UserListStore extends Exome {}
+```
+
+4. Try to base all logic inside actions instead of components;
+    - It's way easier to manage data flow via actions while UI frameworks only display data, UI and trigger user events.
+5. If you're going with `features` folder structure, then put store there too:
+
+```txt
+my-project/
+├── features/
+│   └── jsonlogic-editor/
+│       ├── jsonlogic-editor.component.tsx
+│       └── jsonlogic-editor.store.ts
+│   ...
+```
+
+6. If you're have different folder structure, then put stores together:
+
+```txt
+my-project/
+├── components/
+│   ...
+├── stores/
+│   ├── settings.store.ts
+│   └── user.store.ts
+│   ...
+```
+
+Now you may not follow these suggestions and maybe find some better way to handle things, might as well [open issue](https://github.com/Marcisbee/exome/issues) revealing that info with everyone.
 
 ## Nested stores
 @TODO

@@ -1,0 +1,66 @@
+# angular
+
+```ts twoslash
+// @noErrors
+import {
+  useStore
+} from "exome/angular";
+```
+
+<div className="api-explore">
+<p className="api-explore-comment">
+Creates Angular signal and subscribes to store instance update events and trigger updates to component accordingly.
+</p>
+```ts twoslash
+// @noErrors
+import { type Exome } from "exome";
+import type { Signal } from "@angular/core";
+// ---cut---
+function useStore<T extends Exome, R = T>(
+  store: T,
+  selector?: (state: T) => R,
+): Signal<R>;
+```
+</div>
+
+:::code-group
+
+```ts twoslash [example.ts]
+// @noErrors
+import { Component } from "@angular/core"
+// ---cut---
+import { useStore } from "exome/angular"
+import { counterStore } from "./counter.store.ts"
+
+@Component({
+  selector: 'my-app',
+  template: `
+    <button (click)="increment()">
+      {{count}}
+    </button>
+  `,
+})
+export class App {
+  public count = useStore(counterStore, (s) => s.count);
+
+  public increment() {
+    counterStore.increment();
+  }
+}
+```
+
+```ts twoslash [counter.store.ts] filename="counter.store.ts"
+import { Exome } from "exome"
+
+class CounterStore extends Exome {
+  public count = 0
+
+  public increment() {
+    this.count += 1
+  }
+}
+
+export const counterStore = new CounterStore()
+```
+
+:::

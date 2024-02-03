@@ -43,7 +43,7 @@ class CounterComponent extends LitElement {
     const { count, increment } = this.counter.store;
 
     return html`
-      <h1 @click=${increment}>${count}</h1>
+      <button @click=${increment}>${count}</button>
     `;
   }
 }

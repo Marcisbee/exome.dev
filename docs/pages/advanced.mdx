@@ -76,3 +76,58 @@ addMiddleware((instance, action, payload) => {
   }
 })
 ```
+
+This brings us right into next topic.
+
+## Update
+
+Every time action is called for specific instance, it triggers update event for it automatically. But sometimes when performance is on the line and updating UI so much may bring only harm. So there is a way to bypass actions.
+
+It is possible to do update events manually for each instance separately.
+
+```ts twoslash
+// @noErrors
+import { Exome, subscribe, update } from "exome"
+
+class PositionStore extends Exome {
+  public x = 10
+  public y = 10
+}
+
+const positionStore = new PositionStore()
+
+subscribe(positionStore, console.log)
+
+positionStore.x = 15
+positionStore.x = 20
+
+// @log: log: PositionStore { x: 20; y: 10 }
+update(positionStore)
+```
+
+This way control is given to you when update events are triggered.
+
+But sometimes updating one instance is not enough, in those cases you can use `updateAll` function to trigger update event to EVERY store instance.
+
+```ts twoslash
+// @noErrors
+import { Exome, subscribe } from "exome"
+
+class PositionStore extends Exome {
+  public x = 10
+  public y = 10
+}
+
+const positionStore = new PositionStore()
+
+subscribe(positionStore, console.log)
+
+positionStore.x = 15
+positionStore.x = 20
+
+// ---cut---
+import { updateAll } from "exome"
+
+// @log: log: PositionStore { x: 20; y: 10 }
+updateAll()
+```

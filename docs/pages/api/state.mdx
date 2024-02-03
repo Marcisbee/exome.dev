@@ -1,0 +1,70 @@
+# state
+
+```ts twoslash
+// @noErrors
+import {
+  saveState,
+  loadState,
+  registerLoadable
+} from "exome/state";
+```
+
+<div className="api-explore">
+<p className="api-explore-comment">
+Saves given store instance and its children (even recursive) to string that can be later restored.
+</p>
+```ts twoslash
+// @noErrors
+import { Exome } from "exome";
+// ---cut---
+function saveState(store: Exome, readable?: boolean): string;
+```
+</div>
+
+```ts [Example] twoslash
+// @noErrors
+import { Exome } from "exome";
+import { saveState } from "exome/state";
+// ---cut---
+class CounterStore extends Exome {
+  public count = 5
+
+  public increment() {
+    this.count += 1
+  }
+}
+
+// @log: {"$$exome_id":"CounterStore-LS5WUJPF17SF","count":5}
+saveState(new CounterStore())
+```
+
+<div className="api-explore">
+<p className="api-explore-comment">
+Loads saved store into existing store instance. It will rebuild all children stores too.
+</p>
+```ts twoslash
+// @noErrors
+import { Exome } from "exome";
+// ---cut---
+function loadState(store: Exome, state: string): any;
+```
+</div>
+
+```ts [Example] twoslash
+// @noErrors
+import { Exome } from "exome";
+import { loadState } from "exome/state";
+class CounterStore extends Exome {
+  public count = 5
+
+  public increment() {
+    this.count += 1
+  }
+}
+// ---cut---
+const counterStore = new CounterStore()
+const savedStore = `{"$$exome_id":"CounterStore-LS5WUJPF17SF","count":200}`
+
+// @log: CounterStore { count: 200, increment: [Function] }
+loadState(counterStore, savedStore)
+```

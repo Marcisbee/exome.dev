@@ -1,0 +1,51 @@
+# vue
+
+```ts twoslash
+// @noErrors
+import {
+  useStore
+} from "exome/vue";
+```
+
+<div className="api-explore">
+<p className="api-explore-comment">
+Subscribes to store instance update events and trigger updates to component accordingly.
+</p>
+```ts twoslash
+// @noErrors
+import { type Exome } from "exome";
+// ---cut---
+function useStore<T extends Exome>(store: T): Readonly<T>;
+```
+</div>
+
+:::code-group
+
+```vue [example.vue] filename="example.vue"
+<script lang="ts" setup>
+  import { useStore } from "exome/vue";
+  import { counter } from "./counter.store.ts";
+
+  const { count, increment } = useStore(counter);
+</script>
+
+<template>
+  <button @click="increment()">{{ count }}</button>
+</template>
+```
+
+```ts twoslash [counter.store.ts] filename="counter.store.ts"
+import { Exome } from "exome"
+
+class CounterStore extends Exome {
+  public count = 0
+
+  public increment() {
+    this.count += 1
+  }
+}
+
+export const counterStore = new CounterStore()
+```
+
+:::

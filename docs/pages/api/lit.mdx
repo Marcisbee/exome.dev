@@ -37,14 +37,14 @@ import { counterStore } from "./counter.store.ts"
 
 @customElement("counter")
 class CounterComponent extends LitElement {
-  private counter = new StoreController(this, counterStore);
+  private counter = new StoreController(this, counterStore)
 
   render() {
-    const { count, increment } = this.counter.store;
+    const { count, increment } = this.counter.store
 
     return html`
       <button @click=${increment}>${count}</button>
-    `;
+    `
   }
 }
 ```

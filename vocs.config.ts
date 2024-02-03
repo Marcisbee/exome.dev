@@ -96,47 +96,47 @@ export default defineConfig({
 			],
 		},
 
-		{
-			text: "Integration",
-			items: [
-				{
-					text: "@TODO: React",
-					// link: '/integration/react',
-				},
-				{
-					text: "@TODO: Preact",
-					// link: '/integration/preact',
-				},
-				{
-					text: "@TODO: Vue",
-					// link: '/integration/vue',
-				},
-				{
-					text: "@TODO: Svelte",
-					// link: '/integration/svelte',
-				},
-				{
-					text: "@TODO: Solid",
-					// link: '/integration/solid',
-				},
-				{
-					text: "@TODO: Lit",
-					// link: '/integration/lit',
-				},
-				{
-					text: "@TODO: Rxjs",
-					// link: '/integration/rxjs',
-				},
-				{
-					text: "@TODO: Angular",
-					// link: '/integration/angular',
-				},
-				{
-					text: "@TODO: No framework",
-					// link: '/integration/vanilla',
-				},
-			],
-		},
+		// {
+		// 	text: "Integration",
+		// 	items: [
+		// 		{
+		// 			text: "@TODO: React",
+		// 			// link: '/integration/react',
+		// 		},
+		// 		{
+		// 			text: "@TODO: Preact",
+		// 			// link: '/integration/preact',
+		// 		},
+		// 		{
+		// 			text: "@TODO: Vue",
+		// 			// link: '/integration/vue',
+		// 		},
+		// 		{
+		// 			text: "@TODO: Svelte",
+		// 			// link: '/integration/svelte',
+		// 		},
+		// 		{
+		// 			text: "@TODO: Solid",
+		// 			// link: '/integration/solid',
+		// 		},
+		// 		{
+		// 			text: "@TODO: Lit",
+		// 			// link: '/integration/lit',
+		// 		},
+		// 		{
+		// 			text: "@TODO: Rxjs",
+		// 			// link: '/integration/rxjs',
+		// 		},
+		// 		{
+		// 			text: "@TODO: Angular",
+		// 			// link: '/integration/angular',
+		// 		},
+		// 		{
+		// 			text: "@TODO: No framework",
+		// 			// link: '/integration/vanilla',
+		// 		},
+		// 	],
+		// },
 
 		{
 			text: "Guides",
@@ -162,7 +162,6 @@ export default defineConfig({
 
 		{
 			text: "API reference",
-			collapsed: true,
 			items: [
 				{
 					text: "exome",

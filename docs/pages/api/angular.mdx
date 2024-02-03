@@ -41,10 +41,10 @@ import { counterStore } from "./counter.store.ts"
   `,
 })
 export class App {
-  public count = useStore(counterStore, (s) => s.count);
+  public count = useStore(counterStore, (s) => s.count)
 
   public increment() {
-    counterStore.increment();
+    counterStore.increment()
   }
 }
 ```

@@ -23,10 +23,10 @@ function useStore<T extends Exome>(store: T): Readonly<T>;
 
 ```vue [example.vue]
 <script lang="ts" setup>
-  import { useStore } from "exome/vue";
-  import { counterStore } from "./counter.store.ts";
+  import { useStore } from "exome/vue"
+  import { counterStore } from "./counter.store.ts"
 
-  const { count, increment } = useStore(counterStore);
+  const { count, increment } = useStore(counterStore)
 </script>
 
 <template>

@@ -131,3 +131,88 @@ import { updateAll } from "exome"
 // @log: log: PositionStore { x: 20; y: 10 }
 updateAll()
 ```
+
+## Save & Load
+
+Since exome is built around class instances being used as state objects, its not like we could use `JSON.stringify` to save state to file or send to server.
+
+For this reason there are 2 helper functions to help with this.
+
+### saveState
+
+This function expects store instance to be provided. And in return it gives you string that can be saved to wherever you wish freezing current state in that string.
+
+```ts twoslash
+// @noErrors
+import { Exome } from "exome";
+class CounterStore extends Exome {
+  public count = 5
+
+  public increment() {
+    this.count += 1
+  }
+}
+
+// ---cut---
+import { saveState } from "exome/state"
+
+const counterStore = new CounterStore()
+
+// @log: {"$$exome_id":"CounterStore-LS5WUJPF17SF","count":5}
+const savedStore = saveState(counterStore)
+```
+
+### loadState
+
+Since we're able to save state, it only makes sense that we could also load it back.
+
+For this reason we can use `loadState` and prepare instance data will be loaded to.
+
+```ts twoslash
+// @noErrors
+import { Exome } from "exome";
+class CounterStore extends Exome {
+  public count = 5
+
+  public increment() {
+    this.count += 1
+  }
+}
+// ---cut---
+import { loadState } from "exome/state";
+
+// @log: CounterStore { count: 5, increment: [Function] }
+const counterStore = new CounterStore()
+
+const savedStore = `{"$$exome_id":"CounterStore-LS5WUJPF17SF","count":999}`
+
+// @log: CounterStore { count: 999, increment: [Function] }
+loadState(counterStore, savedStore)
+```
+
+`loadState` function will trigger `LOAD_STATE` action in middlewares for specific instances that are loaded from string.
+
+One caveat for this to properly work is that we need to register stores that are saved so that `loadState` knows that stores to build from:
+
+```ts twoslash
+// @noErrors
+import { Exome } from "exome";
+import { registerLoadable } from "exome/state";
+class CounterStore extends Exome {
+  public count = 5
+
+  public increment() {
+    this.count += 1
+  }
+}
+// ---cut---
+import { registerLoadable } from "exome/state";
+
+registerLoadable({
+  CounterStore,
+})
+```
+
+## Get instance id
+
+@TODO

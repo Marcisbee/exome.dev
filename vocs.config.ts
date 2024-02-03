@@ -68,8 +68,8 @@ export default defineConfig({
 					link: '/advanced/#update',
 				},
 				{
-					text: "@TODO: Save & Load",
-					link: '/advanced/#save-load',
+					text: "Save & Load",
+					link: '/advanced/#save--load',
 				},
 				{
 					text: "@TODO: Get instance id",

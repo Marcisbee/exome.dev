@@ -61,45 +61,46 @@ export default defineConfig({
 			items: [
 				{
 					text: "Middleware",
-					link: '/advanced/#middleware',
+					link: "/advanced/#middleware",
 				},
 				{
 					text: "Update",
-					link: '/advanced/#update',
+					link: "/advanced/#update",
 				},
 				{
 					text: "Save & Load",
-					link: '/advanced/#save--load',
+					link: "/advanced/#save--load",
 				},
 				{
 					text: "Instance id",
-					link: '/advanced/#instance-id',
+					link: "/advanced/#instance-id",
 				},
 			],
 		},
 
 		{
 			text: "Guides",
+			link: "/guides",
 			items: [
 				{
 					text: "@TODO: Folder structure",
-					// link: '/guides/folder-structure',
+					link: "/guides#folder-structure",
 				},
 				{
 					text: "@TODO: Nested stores",
-					// link: '/guides/nested-stores',
+					link: "/guides#nested-stores",
 				},
 				{
 					text: "@TODO: Testing",
-					// link: '/guides/testing',
+					link: "/guides#testing",
 				},
 				{
 					text: "@TODO: Devtools",
-					// link: '/guides/devtools',
+					link: "/guides#devtools",
 				},
 				{
 					text: "@TODO: Custom integration",
-					// link: '/guides/custom-integration',
+					link: "/guides#custom-integration",
 				},
 			],
 		},

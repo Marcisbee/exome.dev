@@ -57,6 +57,21 @@ Remember that this is quite a regular class (with some behind the scenes work). 
 // [!include ~/snippets/basics/store.ts:classEnd]
 ```
 
+Properties can also be defined inside constructor, just like any regular class:
+
+```ts twoslash
+// @noErrors
+// [!include ~/snippets/basics/store.ts:import]
+
+// [!include ~/snippets/basics/store.ts:classStart]
+  constructor(
+    public todo: { text: string, done: boolean }[] = [] // [!code hl] // [!code focus]
+  ) {
+    super()
+  }
+// [!include ~/snippets/basics/store.ts:classEnd]
+```
+
 For dynamic/computed properties you can easily use getters:
 
 ```ts twoslash

@@ -61,82 +61,22 @@ export default defineConfig({
 			items: [
 				{
 					text: "@TODO: Middleware",
-					// link: '/advanced/#middleware',
+					link: '/advanced/#middleware',
 				},
 				{
 					text: "@TODO: Update",
-					// link: '/advanced/#update',
+					link: '/advanced/#update',
 				},
 				{
 					text: "@TODO: Save & Load",
-					// link: '/advanced/#save-load',
+					link: '/advanced/#save-load',
 				},
 				{
 					text: "@TODO: Get instance id",
-					// link: '/advanced/#get-instance-id',
+					link: '/advanced/#get-instance-id',
 				},
 			],
 		},
-
-		{
-			text: "Tutorials",
-			items: [
-				{
-					text: "@TODO: Todo App",
-					// link: '/tutorials/todo-app',
-				},
-				{
-					text: "@TODO: Movie DB app",
-					// link: '/tutorials/todo-app',
-				},
-				{
-					text: "@TODO: Cookie Clicker Game",
-					// link: '/tutorials/cookie-clicker-game',
-				},
-			],
-		},
-
-		// {
-		// 	text: "Integration",
-		// 	items: [
-		// 		{
-		// 			text: "@TODO: React",
-		// 			// link: '/integration/react',
-		// 		},
-		// 		{
-		// 			text: "@TODO: Preact",
-		// 			// link: '/integration/preact',
-		// 		},
-		// 		{
-		// 			text: "@TODO: Vue",
-		// 			// link: '/integration/vue',
-		// 		},
-		// 		{
-		// 			text: "@TODO: Svelte",
-		// 			// link: '/integration/svelte',
-		// 		},
-		// 		{
-		// 			text: "@TODO: Solid",
-		// 			// link: '/integration/solid',
-		// 		},
-		// 		{
-		// 			text: "@TODO: Lit",
-		// 			// link: '/integration/lit',
-		// 		},
-		// 		{
-		// 			text: "@TODO: Rxjs",
-		// 			// link: '/integration/rxjs',
-		// 		},
-		// 		{
-		// 			text: "@TODO: Angular",
-		// 			// link: '/integration/angular',
-		// 		},
-		// 		{
-		// 			text: "@TODO: No framework",
-		// 			// link: '/integration/vanilla',
-		// 		},
-		// 	],
-		// },
 
 		{
 			text: "Guides",
@@ -156,6 +96,28 @@ export default defineConfig({
 				{
 					text: "@TODO: Devtools",
 					// link: '/guides/devtools',
+				},
+				{
+					text: "@TODO: Custom integration",
+					// link: '/guides/custom-integration',
+				},
+			],
+		},
+
+		{
+			text: "Tutorials",
+			items: [
+				{
+					text: "@TODO: Todo App",
+					// link: '/tutorials/todo-app',
+				},
+				{
+					text: "@TODO: Movie DB app",
+					// link: '/tutorials/todo-app',
+				},
+				{
+					text: "@TODO: Cookie Clicker Game",
+					// link: '/tutorials/cookie-clicker-game',
 				},
 			],
 		},
@@ -184,36 +146,41 @@ export default defineConfig({
 					link: "/api/ghost",
 				},
 				{
-					text: "exome/react",
-					link: "/api/react",
-				},
-				{
-					text: "exome/preact",
-					link: "/api/preact",
-				},
-				{
-					text: "exome/vue",
-					link: "/api/vue",
-				},
-				{
-					text: "exome/lit",
-					link: "/api/lit",
-				},
-				{
-					text: "exome/rxjs",
-					link: "/api/rxjs",
-				},
-				{
-					text: "exome/svelte",
-					link: "/api/svelte",
-				},
-				{
-					text: "exome/solid",
-					link: "/api/solid",
-				},
-				{
-					text: "exome/angular",
-					link: "/api/angular",
+					text: "Integrations",
+					items: [
+						{
+							text: "exome/react",
+							link: "/api/react",
+						},
+						{
+							text: "exome/preact",
+							link: "/api/preact",
+						},
+						{
+							text: "exome/vue",
+							link: "/api/vue",
+						},
+						{
+							text: "exome/lit",
+							link: "/api/lit",
+						},
+						{
+							text: "exome/rxjs",
+							link: "/api/rxjs",
+						},
+						{
+							text: "exome/svelte",
+							link: "/api/svelte",
+						},
+						{
+							text: "exome/solid",
+							link: "/api/solid",
+						},
+						{
+							text: "exome/angular",
+							link: "/api/angular",
+						},
+					],
 				},
 			],
 		},

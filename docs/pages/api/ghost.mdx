@@ -1,0 +1,22 @@
+# state
+
+```ts twoslash
+// @noErrors
+import {
+  GhostExome
+} from "exome/ghost";
+```
+
+<div className="api-explore">
+<p className="api-explore-comment">
+This is a class that pretends to be Exome store, but doesn't apply same change detection logic. This is useful for testing and mocking data.
+</p>
+```ts twoslash
+// @noErrors
+import { exomeId } from "exome";
+// ---cut---
+class GhostExome {
+  constructor()
+}
+```
+</div>

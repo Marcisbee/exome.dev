@@ -1,0 +1,53 @@
+# utils
+
+```ts twoslash
+// @noErrors
+import {
+  getActionStatus
+} from "exome/utils";
+```
+
+<div className="api-explore">
+<p className="api-explore-comment">
+Subscribes to specific action in specific instance and returns satus about that action.
+</p>
+```ts twoslash
+// @noErrors
+import { Exome } from "exome";
+interface ActionStatus<E = any> {
+  loading: boolean;
+  error: false | E;
+  unsubscribe: () => void;
+}
+// ---cut---
+function getActionStatus<E = Error, T extends Exome = any>(
+  store: T,
+  action: keyof T,
+): ActionStatus<E>;
+```
+</div>
+
+<div className="api-explore">
+```ts twoslash
+// @noErrors
+interface ActionStatus<E = any> {
+  loading: boolean;
+  error: false | E;
+  unsubscribe: () => void;
+}
+```
+</div>
+
+```ts [Example] twoslash
+// @noErrors
+import { Exome } from "exome";
+import { getActionStatus } from "exome/utils";
+// ---cut---
+class Store extends Exome {
+  public get satus() {
+    return getActionStatus(this, "fetchRemoteData")
+  }
+
+  public async fetchRemoteData() {}
+}
+```

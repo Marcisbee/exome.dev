@@ -17,7 +17,6 @@ import {
 ```
 
 <div className="api-explore">
-
 <p className="api-explore-comment">
 Class that every store extends from.
 </p>
@@ -25,13 +24,14 @@ Class that every store extends from.
 // @noErrors
 // ---cut---
 class Exome {
-  constructor();
+  constructor()
 }
 ```
+</div>
 
-<br />
 ---
 
+<div className="api-explore">
 <p className="api-explore-comment">
 Subscribe to store instance update events.
 </p>
@@ -43,12 +43,13 @@ type Unsubscribe = () => void
 function subscribe<T extends Exome>(
   store: T,
   callback: (store: T) => void,
-): Unsubscribe
+): Unsubscribe;
 ```
+</div>
 
-<br />
 ---
 
+<div className="api-explore">
 <p className="api-explore-comment">
 Sends update event to specific store instance.
 </p>
@@ -56,24 +57,26 @@ Sends update event to specific store instance.
 // @noErrors
 import { Exome } from "exome";
 // ---cut---
-function update(store: Exome): void
+function update(store: Exome): void;
 ```
+</div>
 
-<br />
 ---
 
+<div className="api-explore">
 <p className="api-explore-comment">
 Sends update event to all existing store instances.
 </p>
 ```ts twoslash
 // @noErrors
 // ---cut---
-function updateAll(): void
+function updateAll(): void;
 ```
+</div>
 
-<br />
 ---
 
+<div className="api-explore">
 <p className="api-explore-comment">
 Listens to specific actions for all instances of particular store.
 </p>
@@ -92,12 +95,13 @@ function onAction<T extends Exome>(
     error?: Error
   ) => void,
   type?: "before" | "after",
-): Unsubscribe
+): Unsubscribe;
 ```
+</div>
 
-<br />
 ---
 
+<div className="api-explore">
 <p className="api-explore-comment">
 Gets unique id of specific store instance.
 </p>
@@ -105,12 +109,13 @@ Gets unique id of specific store instance.
 // @noErrors
 import { Exome } from "exome";
 // ---cut---
-function getExomeId(store: Exome): string
+function getExomeId(store: Exome): string;
 ```
+</div>
 
-<br />
 ---
 
+<div className="api-explore">
 <p className="api-explore-comment">
 Sets custom id to specific store instance.
 </p>
@@ -118,12 +123,13 @@ Sets custom id to specific store instance.
 // @noErrors
 import { Exome } from "exome";
 // ---cut---
-function setExomeId(store: Exome, id: string): string
+function setExomeId(store: Exome, id: string): string;
 ```
+</div>
 
-<br />
 ---
 
+<div className="api-explore">
 <p className="api-explore-comment">
 Listens to middleware calls for any store instance.
 </p>
@@ -132,12 +138,13 @@ Listens to middleware calls for any store instance.
 import { type Middleware } from "exome";
 type Unsubscribe = () => void;
 // ---cut---
-function addMiddleware(fn: Middleware): Unsubscribe
+function addMiddleware(fn: Middleware): Unsubscribe;
 ```
+</div>
 
-<br />
 ---
 
+<div className="api-explore">
 <p className="api-explore-comment">
 Triggers middleware for particular store instance to be called. When return function gets called, it maks that the middleware action was completed with or without errors.
 </p>
@@ -152,10 +159,11 @@ function runMiddleware(
   payload: any[],
 ): (error?: Error) => void;
 ```
+</div>
 
-<br />
 ---
 
+<div className="api-explore">
 ```ts twoslash
 // @noErrors
 import { Exome } from "exome";

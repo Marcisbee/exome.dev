@@ -26,9 +26,23 @@ function exomeReduxDevtools({
 }: ReduxDevtoolsConfig): Middleware;
 ```
 
-<br />
+</div>
+
+```ts [Example] twoslash
+// @noErrors
+import { addMiddleware } from "exome"
+import { exomeReduxDevtools } from "exome/devtools"
+// ---cut---
+addMiddleware(
+  exomeReduxDevtools({
+    name: "App name"
+  })
+)
+```
+
 ---
 
+<div className="api-explore">
 <p className="api-explore-comment">
 Subscribes to [Exome Developer Tools](https://chromewebstore.google.com/detail/exome-developer-tools/pcanmpamoedhpfpbjajlkpicbikbnhdg).
 </p>
@@ -45,11 +59,20 @@ function unstableExomeDevtools({
   ignoreListStores,
 }: ExomeDevtoolsConfig): Middleware;
 ```
+</div>
 
-<br />
+```ts [Example] twoslash
+// @noErrors
+import { addMiddleware } from "exome"
+import { unstableExomeDevtools } from "exome/devtools"
+// ---cut---
+addMiddleware(
+  unstableExomeDevtools({
+    name: "App name"
+  })
+)
+```
 
 :::tip[NOTE]
 Exome devtools is currently in alpha and may not be stable.
 :::
-
-</div>

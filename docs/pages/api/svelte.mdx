@@ -1,10 +1,10 @@
-# vue
+# svelte
 
 ```ts twoslash
 // @noErrors
 import {
   useStore
-} from "exome/vue";
+} from "exome/svelte";
 ```
 
 <div className="api-explore">
@@ -14,24 +14,32 @@ Subscribes to store instance update events and trigger updates to component acco
 ```ts twoslash
 // @noErrors
 import { type Exome } from "exome";
+type Subscription = {
+  subscribe(cb: (value: R) => void): Unsubscribe
+}
+type Unsubscribe = () => void
 // ---cut---
-function useStore<T extends Exome>(store: T): Readonly<T>;
+function useStore<T extends Exome, R = T>(
+  store: T,
+  selector?: (state: T) => R,
+): Subscription;
 ```
 </div>
 
 :::code-group
 
-```vue [example.vue]
-<script lang="ts" setup>
-  import { useStore } from "exome/vue";
-  import { counter } from "./counter.store.ts";
+```svelte [example.svelte]
+<script lang="ts">
+  import { useStore } from "exome/svelte"
+  import { counter } from "./counter.store.ts"
 
-  const { count, increment } = useStore(counter);
+  const { increment } = counter
+  const count = useStore(counter, s => s.count)
 </script>
 
-<template>
-  <button @click="increment()">{{ count }}</button>
-</template>
+<main>
+  <button on:click={increment}>{$count}</button>
+</main>
 ```
 
 ```ts twoslash [counter.store.ts] filename="counter.store.ts"

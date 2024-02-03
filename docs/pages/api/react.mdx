@@ -1,0 +1,54 @@
+# react
+
+```ts twoslash
+// @noErrors
+import {
+  useStore
+} from "exome/react";
+```
+
+<div className="api-explore">
+<p className="api-explore-comment">
+Subscribes to store instance update events and trigger updates to component accordingly.
+</p>
+```ts twoslash
+// @noErrors
+import { type Exome } from "exome";
+// ---cut---
+function useStore<T extends Exome>(store: T): Readonly<T>;
+```
+</div>
+
+:::code-group
+
+```tsx twoslash [example.tsx]
+// @noErrors
+import React from "react";
+// ---cut---
+import { useStore } from "exome/react"
+import { counterStore } from "./counter.store.ts"
+
+function App() {
+  const { count, increment } = useStore(counterStore)
+
+  return (
+    <button onClick={increment}>{count}</button>
+  );
+}
+```
+
+```ts twoslash [counter.store.ts] filename="counter.store.ts"
+import { Exome } from "exome"
+
+class CounterStore extends Exome {
+  public count = 0
+
+  public increment() {
+    this.count += 1
+  }
+}
+
+export const counterStore = new CounterStore()
+```
+
+:::

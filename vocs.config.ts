@@ -60,7 +60,7 @@ export default defineConfig({
 			link: "/advanced",
 			items: [
 				{
-					text: "@TODO: Middleware",
+					text: "Middleware",
 					link: '/advanced/#middleware',
 				},
 				{

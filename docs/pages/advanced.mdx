@@ -1,1 +1,78 @@
 # Advanced
+
+## Middleware
+
+Middleware is helping mechanism for detecting update events before and after they are finished.
+
+It's similar to `update` function, but instead of listening to one store instance, it listens to every single store instance at the same time. Every action will trigger middleware.
+
+```ts twoslash
+// @noErrors
+import { Exome, addMiddleware } from "exome"
+// ---cut---
+class CounterStore extends Exome {
+  public count = 0
+  public add(count: number) {
+    this.count += count
+  }
+}
+
+addMiddleware((instance, action, payload) => {
+  console.log("start", action)
+  return (error) => {
+    console.log("end", action)
+  }
+});
+
+// @log: log: "start NEW"
+const counterStore = new CounterStore()
+
+counterStore.add(5)
+// @log: log: "start add"
+// @log: log: "end add"
+```
+
+If current actions are not enough, `runMiddleware` can trigger custom middleware actions.
+
+```ts twoslash
+// @noErrors
+import { Exome, runMiddleware } from "exome"
+class CounterStore extends Exome {
+  public count = 0
+  public add(count: number) {
+    this.count += count
+  }
+}
+
+const counterStore = new CounterStore()
+// ---cut---
+// @log: log: "start CUSTOM_ACTION"
+const after = runMiddleware(counterStore, "CUSTOM_ACTION", [])
+
+// do something in between
+
+// @log: log: "end CUSTOM_ACTION"
+after();
+```
+
+Note that middleware will NOT trigger instance update events itself since it acts on them. But in case this is needed, you can use `update` function to update specific instance.
+
+```ts twoslash
+// @noErrors
+import { Exome, addMiddleware } from "exome"
+class CounterStore extends Exome {
+  public count = 0
+  public add(count: number) {
+    this.count += count
+  }
+}
+
+// ---cut---
+import { update } from "exome"
+
+addMiddleware((instance, action, payload) => {
+  if (action === "CUSTOM_ACTION") {
+    update(instance)
+  }
+})
+```

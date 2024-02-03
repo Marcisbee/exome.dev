@@ -1,0 +1,60 @@
+# rxjs
+
+```ts twoslash
+// @noErrors
+import {
+  observableFromExome
+} from "exome/rxjs";
+```
+
+<div className="api-explore">
+<p className="api-explore-comment">
+Subscribes to store instance update events and trigger Observable updates accordingly.
+</p>
+```ts twoslash
+// @noErrors
+import { type Exome } from "exome";
+import { Observable } from "rxjs";
+// ---cut---
+function observableFromExome<T extends Exome>(
+  store: T,
+): Observable<T>;
+```
+</div>
+
+:::code-group
+
+```ts twoslash [example.ts]
+// @noErrors
+import { map, distinctUntilChanged } from "rxjs"
+// ---cut---
+import { observableFromExome } from "exome/rxjs"
+import { counterStore } from "./counter.store.ts"
+
+observableFromExome(counterStore)
+  .pipe(
+    map(({ count }) => count),
+    distinctUntilChanged()
+  )
+  .subscribe((value) => {
+    console.log("Count changed to", value)
+  });
+
+setInterval(counterStore.increment, 1000)
+```
+
+```ts twoslash [counter.store.ts] filename="counter.store.ts"
+import { Exome } from "exome"
+
+class CounterStore extends Exome {
+  public count = 0
+
+  public increment() {
+    this.count += 1
+  }
+}
+
+export const counterStore = new CounterStore()
+```
+
+:::

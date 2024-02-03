@@ -31,10 +31,10 @@ function useStore<T extends Exome, R = T>(
 ```svelte [example.svelte]
 <script lang="ts">
   import { useStore } from "exome/svelte"
-  import { counter } from "./counter.store.ts"
+  import { counterStore } from "./counter.store.ts"
 
-  const { increment } = counter
-  const count = useStore(counter, s => s.count)
+  const { increment } = counterStore
+  const count = useStore(counterStore, s => s.count)
 </script>
 
 <main>

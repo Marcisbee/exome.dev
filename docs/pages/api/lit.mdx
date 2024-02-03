@@ -1,0 +1,66 @@
+# lit
+
+```ts twoslash
+// @noErrors
+import {
+  StoreController
+} from "exome/lit";
+```
+
+<div className="api-explore">
+<p className="api-explore-comment">
+Subscribes to store instance update events and trigger updates to component accordingly.
+</p>
+```ts twoslash
+// @noErrors
+import { type Exome } from "exome";
+import { ReactiveController, ReactiveControllerHost } from "lit";
+// ---cut---
+class StoreController<T extends Exome> implements ReactiveController {
+  store: T;
+  constructor(host: ReactiveControllerHost, store: T);
+  hostConnected(): void;
+  hostDisconnected(): void;
+}
+```
+</div>
+
+:::code-group
+
+```ts twoslash [example.ts]
+// @noErrors
+import { LitElement } from "lit"
+import { customElement } from "lit/decorators"
+// ---cut---
+import { StoreController } from "exome/lit"
+import { counterStore } from "./counter.store.ts"
+
+@customElement("counter")
+class CounterComponent extends LitElement {
+  private counter = new StoreController(this, counterStore);
+
+  render() {
+    const { count, increment } = this.counter.store;
+
+    return html`
+      <h1 @click=${increment}>${count}</h1>
+    `;
+  }
+}
+```
+
+```ts twoslash [counter.store.ts] filename="counter.store.ts"
+import { Exome } from "exome"
+
+class CounterStore extends Exome {
+  public count = 0
+
+  public increment() {
+    this.count += 1
+  }
+}
+
+export const counterStore = new CounterStore()
+```
+
+:::

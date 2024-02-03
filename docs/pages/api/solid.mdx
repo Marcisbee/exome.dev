@@ -28,10 +28,10 @@ import { useStore } from "exome/solid"
 import { counterStore } from "./counter.store.ts"
 
 function App() {
-  const count = useStore(counter, s => s.count)
+  const count = useStore(counterStore, s => s.count)
 
   return (
-    <button onClick={counter.increment}>{count}</button>
+    <button onClick={counterStore.increment}>{count}</button>
   );
 }
 ```

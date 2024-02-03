@@ -57,3 +57,63 @@
 .api-anchor .vocs_Heading {
 	font-size: 0;
 }
+
+.live-code-preview {
+	border: 1px solid var(--vocs-color_codeInlineBorder);
+	border-radius: var(--vocs-borderRadius_4);
+	margin-top: calc(calc(0px - var(--vocs-borderRadius_4)) - var(--vocs-space_24));
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+	background: var(--vocs-color_background);
+	padding: 30px 20px 30px 20px;
+	position: relative;
+	z-index: 1;
+}
+
+.live-code-preview > span {
+	display: block;
+	position: absolute;
+	top: -1px;
+	font-size: 0.6em;
+	line-height: 1em;
+	padding: 6px 10px;
+	background-color: var(--vocs-color_codeBlockBackground);
+	border: 1px solid var(--vocs-color_codeInlineBorder);
+	border-top: 0;
+	border-radius: 0 0 var(--vocs-borderRadius_4) var(--vocs-borderRadius_4);
+}
+
+.live-counter {
+	text-align: center;
+}
+
+.live-counter > h1 {
+	display: block;
+	font-size: 2.4em;
+	line-height: 1em;
+	font-weight: bold;
+	margin-bottom: 14px;
+}
+
+.live-counter > button {
+	display: inline-block;
+	align-items: center;
+	margin: 0 4px;
+	font-size: 1em;
+	line-height: 1em;
+	font-weight: bold;
+	width: 2em;
+	height: 2em;
+	border: 0;
+	background: var(--vocs-color_codeTitleBackground);
+}
+
+.live-counter > button:hover {
+	color: #fff;
+	background: var(--vocs-color_backgroundAccent);
+}
+
+.live-counter > button:active {
+	color: #fff;
+	background: var(--vocs-color_backgroundAccentHover);
+}

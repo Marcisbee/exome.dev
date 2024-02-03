@@ -1,3 +1,6 @@
+import { LiveCounterReact } from "../components/live/counter-react";
+import { LiveCounterReactInterval } from "../components/live/counter-react-interval";
+
 # Getting Started
 
 ## Install Exome
@@ -51,6 +54,11 @@ For now this is not the impressive, currently there's nothing that listens to ch
 // [!include ~/snippets/counter/index.tsx]
 ```
 
+<div className="live-code-preview">
+<span>Live preview</span>
+<LiveCounterReact />
+</div>
+
 Actions don't have to be called in the same component to trigger updates. For example adding this outside the component will update it too:
 
 ```ts twoslash
@@ -59,6 +67,11 @@ Actions don't have to be called in the same component to trigger updates. For ex
 // ---cut---
 setInterval(counterStore.increment, 1000);
 ```
+
+<div className="live-code-preview">
+<span>Live preview</span>
+<LiveCounterReactInterval />
+</div>
 
 [Live Preview](https://dune.land/dune/468e79c1-e31b-4035-bc19-b03dfa363060)
 

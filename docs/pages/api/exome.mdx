@@ -17,6 +17,9 @@ import {
 ```
 
 <div className="api-explore">
+<div className="api-anchor">
+## class Exome
+</div>
 <p className="api-explore-comment">
 Class that every store extends from.
 </p>
@@ -32,6 +35,9 @@ class Exome {
 ---
 
 <div className="api-explore">
+<div className="api-anchor">
+## function subscribe
+</div>
 <p className="api-explore-comment">
 Subscribe to store instance update events.
 </p>
@@ -50,6 +56,9 @@ function subscribe<T extends Exome>(
 ---
 
 <div className="api-explore">
+<div className="api-anchor">
+## function update
+</div>
 <p className="api-explore-comment">
 Sends update event to specific store instance.
 </p>
@@ -64,6 +73,9 @@ function update(store: Exome): void;
 ---
 
 <div className="api-explore">
+<div className="api-anchor">
+## function updateAll
+</div>
 <p className="api-explore-comment">
 Sends update event to all existing store instances.
 </p>
@@ -77,6 +89,9 @@ function updateAll(): void;
 ---
 
 <div className="api-explore">
+<div className="api-anchor">
+## function onAction
+</div>
 <p className="api-explore-comment">
 Listens to specific actions for all instances of particular store.
 </p>
@@ -102,6 +117,9 @@ function onAction<T extends Exome>(
 ---
 
 <div className="api-explore">
+<div className="api-anchor">
+## function getExomeId
+</div>
 <p className="api-explore-comment">
 Gets unique id of specific store instance.
 </p>
@@ -116,6 +134,9 @@ function getExomeId(store: Exome): string;
 ---
 
 <div className="api-explore">
+<div className="api-anchor">
+## function setExomeId
+</div>
 <p className="api-explore-comment">
 Sets custom id to specific store instance.
 </p>
@@ -130,6 +151,9 @@ function setExomeId(store: Exome, id: string): string;
 ---
 
 <div className="api-explore">
+<div className="api-anchor">
+## function addMiddleware
+</div>
 <p className="api-explore-comment">
 Listens to middleware calls for any store instance.
 </p>
@@ -145,6 +169,9 @@ function addMiddleware(fn: Middleware): Unsubscribe;
 ---
 
 <div className="api-explore">
+<div className="api-anchor">
+## function runMiddleware
+</div>
 <p className="api-explore-comment">
 Triggers middleware for particular store instance to be called. When return function gets called, it maks that the middleware action was completed with or without errors.
 </p>

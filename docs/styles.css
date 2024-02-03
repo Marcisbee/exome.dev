@@ -53,3 +53,7 @@
 .api-explore .vocs_CopyButton {
 	display: none !important;
 }
+
+.api-anchor .vocs_Heading {
+	font-size: 0;
+}

@@ -1,0 +1,305 @@
+import { LiveGuidesTodoReact } from "../../components/live/guides-todo";
+import { LiveTutorialsTodoReact } from "../../components/live/tutorials-todo";
+import { LiveTutorialsTodoFilterReact } from "../../components/live/tutorials-todo-filter";
+
+# Tutorial Todo App
+
+In this tutorial we'll cover how to handle building full (but simple) app and how to handle exome nested stores with react. This is not tied to react specifically, just used as an example (practically can be any other framework).
+
+Lets start with creating simple todo store for single todo item. Instead of thinking how can you update todo items, think of each store piece as separate app.
+
+```ts twoslash [todo.store.ts]
+import { Exome } from "exome"
+
+export class TodoStore extends Exome {
+  public completed = false
+
+  constructor(public content: string) {
+    super()
+  }
+
+  public toggle() {
+    this.completed = !this.completed
+  }
+}
+```
+
+We created `completed` property with default value `false`.
+
+However `content` we want to define every time we create a new todo so we'll do that in constructor.
+
+And we need some way to update `completed` status so that will be handled in `toggle` action.
+
+Next we need some store that handles list of todos:
+
+```ts twoslash [todo-list.store.ts]
+// @noErrors
+import { Exome } from "exome"
+
+export class TodoStore extends Exome {
+  public completed = false
+
+  constructor(public content: string) {
+    super();
+  }
+
+  public toggle() {
+    this.completed = !this.completed
+  }
+}
+// ---cut---
+import { Exome } from "exome"
+import { TodoStore } from "./todo.store"
+
+export class TodoListStore extends Exome {
+  public todos: TodoStore[] = []
+
+  public addTodo(todo: TodoStore) {
+    this.todos.push(todo)
+  }
+}
+```
+
+Here we have a store (`TodoListStore`) that contains other stores (`TodoStore`) in `todos` property. This is what exome was designed for.
+
+Also we need a way to add new todo to the list, so that will be handled by `addTodo` action. This action expects already created `TodoStore` instance, but that is not a must, action can also create new `TodoStore` instance itself! I created it this way just to give extra control to dev creating a new todo item.
+
+Ok so that's basically it, we created all that is needed for this app to work. Now lets create UI for this app.
+
+I'll use react for this example, but you can chose any other integration.
+
+```tsx twoslash [app.tsx]
+// @noErrors
+import { Exome } from "exome"
+
+export class TodoStore extends Exome {
+  public completed = false
+
+  constructor(public content: string) {
+    super()
+  }
+
+  public toggle() {
+    this.completed = !this.completed
+  }
+}
+import { Exome } from "exome"
+import { TodoStore } from "./todo.store"
+
+export class TodoListStore extends Exome {
+  public todos: TodoStore[] = []
+
+  public addTodo(todo: TodoStore) {
+    this.todos.push(todo)
+  }
+}
+// ---cut---
+import { getExomeId } from "exome"
+import { useStore } from "exome/react"
+import { TodoListStore } from "./todo-list.store"
+import { TodoStore } from "./todo.store"
+
+const todoListStore = new TodoListStore()
+
+// Fill store with some demo values
+todoListStore.addTodo(new TodoStore("Take out trash"))
+todoListStore.addTodo(new TodoStore("Work out"))
+
+function Todo({ todo }: { todo: TodoStore }) {
+  const { completed, content, toggle } = useStore(todo)
+
+  return (
+    <label>
+      <input
+        type="checkbox"
+        onChange={toggle}
+        checked={completed}
+      />
+      {content}
+    </label>
+  );
+}
+
+function TodoList() {
+  const { todos } = useStore(todoListStore)
+
+  return (
+    <div>
+      <ul>
+        {todos.map((todo) => (
+          <li key={getExomeId(todo)}>
+            <Todo todo={todo} />
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+```
+
+<div className="live-code-preview">
+<span>Live preview</span>
+<LiveGuidesTodoReact />
+</div>
+
+Now there's a lot to unpack here.
+
+First of all - there are two components instead of one. This is due to nature of exome. Since we have two different stores each will have it's own update action.
+
+For example `addTodo` action will only trigger updates in `<TodoList>` component becuase of `useStore` hook used there. However `toggle` action will trigger changes only in `<Todo>` component.
+
+If we'd have only one component, we'd need to call some other action on `TodoListStore` (or manually update it `update(todoListStore)`). This is not prefered as there are no changes and those components don't need to be updated.
+
+Second - react requires every array item to have a `key` so here we can use `getExomeId(todo)` to get unique id of each `TodoStore` instance.
+
+Third - we use `onChange={toggle}` toggle being action from a class. Every action is sort of a wrapper for the changes inside them so by default they are bound to the class. So there's NO NEED to do this: `onChange={() => toggle()}`, except if you want to pass some payload to the action.
+
+---
+
+Now we're gonna create a way to add new todo items to the list.
+
+```tsx
+function TodoList() {
+  const { todos } = useStore(todoListStore) // [!code --]
+  const { todos, addTodo } = useStore(todoListStore) // [!code ++]
+
+  return (
+    <div>
+      <ul>
+        {todos.map((todo) => (
+          <li key={getExomeId(todo)}>
+            <Todo todo={todo} />
+          </li>
+        ))}
+      </ul>
+      <form // [!code ++]
+        onSubmit={(e) => { // [!code ++]
+          e.preventDefault() // [!code ++]
+          const { content: contentEl } = e.target.elements // [!code ++]
+ // [!code ++]
+          addTodo(new TodoStore(contentEl.value)) // [!code ++]
+ // [!code ++]
+          contentEl.value = '' // [!code ++]
+        }} // [!code ++]
+      > // [!code ++]
+        <input name="content" /> // [!code ++]
+        <button type="submit">add</button> // [!code ++]
+      </form> // [!code ++]
+    </div>
+  );
+}
+```
+
+<div className="live-code-preview">
+<span>Live preview</span>
+<LiveTutorialsTodoReact />
+</div>
+
+Now we can trigger updates to `<TodoList>` component by adding new items to store via action.
+
+We can add filtering functionality to `TodoListStore`.
+
+```ts
+class TodoListStore extends Exome {
+  public todos: TodoStore[] = []
+  public filter: "all" | "todo" | "done" = "all" // [!code ++]
+
+  public get filteredTodos() { // [!code ++]
+    if (this.filter === "done") { // [!code ++]
+      return this.todos.filter((t) => t.completed) // [!code ++]
+    } // [!code ++]
+    if (this.filter === "todo") { // [!code ++]
+      return this.todos.filter((t) => !t.completed) // [!code ++]
+    } // [!code ++]
+    return this.todos // [!code ++]
+  } // [!code ++]
+
+  public addTodo(todo: TodoStore) {
+    this.todos.push(todo)
+  }
+
+  public setFilter(filter: TodoListStore["filter"]) { // [!code ++]
+    this.filter = filter // [!code ++]
+  } // [!code ++]
+}
+```
+
+```tsx
+function TodoList() {
+  const { todos } = useStore(todoListStore)
+  const { todos, addTodo } = useStore(todoListStore) // [!code --]
+  const { // [!code ++]
+    filteredTodos, // [!code ++]
+    addTodo, // [!code ++]
+    filter, // [!code ++]
+    setFilter, // [!code ++]
+  } = useStore(todoListStore) // [!code ++]
+
+  return (
+    <div>
+      <button // [!code ++]
+        onClick={() => setFilter("all")} // [!code ++]
+        disabled={filter === "all"} // [!code ++]
+      > // [!code ++]
+        all // [!code ++]
+      </button> // [!code ++]
+      <button // [!code ++]
+        onClick={() => setFilter("todo")} // [!code ++]
+        disabled={filter === "todo"} // [!code ++]
+      > // [!code ++]
+        todo // [!code ++]
+      </button> // [!code ++]
+      <button // [!code ++]
+        onClick={() => setFilter("done")} // [!code ++]
+        disabled={filter === "done"} // [!code ++]
+      > // [!code ++]
+        done // [!code ++]
+      </button> // [!code ++]
+
+      <ul>
+        {todos.map((todo) => ...)} // [!code --]
+        {filteredTodos.map((todo) => ...)} // [!code ++]
+      </ul>
+
+      [...]
+    </div>
+  );
+}
+```
+
+Not much new to unpack here, but one thing I want to mention.
+
+For getting filtered results we used getter `filteredTodos`. Exome doesn't touch getters and setters so they work as usual without update cycles etc.
+
+Still one thing is missing. When switching to todo and updating some of the todo items, it doesn't update list accordingly. That's because there's no action called. We can use `onAction` effect to fix this.
+
+```ts
+import { onAction, update } from "exome" // [!code ++]
+
+class TodoListStore extends Exome {
+  public todos: TodoStore[] = []
+
+  constructor() { // [!code ++]
+    super() // [!code ++]
+ // [!code ++]
+    onAction(TodoStore, "toggle", () => { // [!code ++]
+      update(this) // [!code ++]
+    }) // [!code ++]
+  } // [!code ++]
+
+  public addTodo(todo: TodoStore) {
+    this.todos.push(todo)
+  }
+}
+```
+
+<div className="live-code-preview">
+<span>Live preview</span>
+<LiveTutorialsTodoFilterReact />
+</div>
+
+Now we have a working todo app. Lets do a bit of a recap of what we learned from this:
+- Working with nested stores;
+- How actions trigger update;
+- How to make use of getters;
+- How to use effects.

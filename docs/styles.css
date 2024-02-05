@@ -109,12 +109,14 @@
 	background: var(--vocs-color_codeTitleBackground);
 }
 
+.live-tutorial-todo form button:hover,
 .counter-single-button > button:hover,
 .live-counter > button:hover {
 	color: #fff;
 	background: var(--vocs-color_backgroundAccent);
 }
 
+.live-tutorial-todo form button:active,
 .counter-single-button > button:active,
 .live-counter > button:active {
 	color: #fff;
@@ -123,4 +125,49 @@
 
 .counter-single-button {
   text-align: center;
+}
+
+.live-tutorial-todo ul label input:checked + span {
+  text-decoration: line-through;
+}
+
+.live-tutorial-todo form {
+  display: block;
+  margin-top: 10px;
+}
+
+.live-tutorial-todo input {
+	font-size: 0.9em;
+	line-height: 2em;
+  padding: 0 10px;
+  border: 1px solid var(--vocs-color_codeInlineBorder);
+  border-radius: var(--vocs-borderRadius_4);
+}
+
+.live-tutorial-todo form button {
+  margin-left: 10px;
+	display: inline-block;
+	align-items: center;
+	margin: 0 4px;
+	font-size: 0.9em;
+	line-height: 1em;
+	height: 2em;
+	border: 0;
+  padding: 0 10px;
+	background: var(--vocs-color_codeTitleBackground);
+  border-radius: var(--vocs-borderRadius_4);
+}
+
+.live-tutorial-todo-tabs {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.live-tutorial-todo-tabs button {
+  margin-right: 6px;
+}
+
+.live-tutorial-todo-tabs button:disabled {
+  text-decoration: underline;
+  font-weight: bold;
 }

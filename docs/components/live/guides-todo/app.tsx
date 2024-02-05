@@ -14,8 +14,7 @@ function Todo({ todo }: { todo: TodoStore }) {
 
   return (
     <label>
-      <input type="checkbox" onChange={toggle} checked={completed} />
-      {content}
+      <input type="checkbox" onChange={toggle} checked={completed} /> {content}
     </label>
   );
 }

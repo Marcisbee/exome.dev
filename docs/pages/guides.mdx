@@ -1,4 +1,5 @@
 import { LiveGuidesTodoReact } from "../components/live/guides-todo";
+import componentRaw from "../components/live/guides-todo/index.tsx?raw";
 
 # Guides
 
@@ -59,8 +60,19 @@ Think of exome as atomic store. You can have as many stores as needed that each 
 Lets start with simple todo example. First we need store that handles single todo:
 
 ```ts twoslash [todo.store.ts]
-// @noErrors
-// [!include ~/components/live/guides-todo/todo.store.ts]
+import { Exome } from "exome";
+
+export class TodoStore extends Exome {
+  public completed = false;
+
+  constructor(public content: string) {
+    super();
+  }
+
+  public toggle() {
+    this.completed = !this.completed;
+  }
+}
 ```
 
 We created `completed` property with default value `false`.
@@ -71,9 +83,32 @@ And we need some way to update `comleted` status so that will be handled in `tog
 
 Next we need some store that handles list of todos:
 
-```ts twoslash [todo.store.ts]
+```ts twoslash [todo-list.store.ts]
 // @noErrors
-// [!include ~/components/live/guides-todo/todo-list.store.ts]
+import { Exome } from "exome";
+
+export class TodoStore extends Exome {
+  public completed = false;
+
+  constructor(public content: string) {
+    super();
+  }
+
+  public toggle() {
+    this.completed = !this.completed;
+  }
+}
+// ---cut---
+import { Exome } from "exome";
+import { TodoStore } from "./todo.store";
+
+export class TodoListStore extends Exome {
+  public todos: TodoStore[] = [];
+
+  public addTodo(todo: TodoStore) {
+    this.todos.push(todo);
+  }
+}
 ```
 
 Here we have a store (`TodoListStore`) that contains other stores (`TodoStore`) in `todos` property. This is what exome was designed for.
@@ -86,7 +121,66 @@ I'll use react for this example, but you can chose any other integration.
 
 ```tsx twoslash [app.tsx]
 // @noErrors
-// [!include ~/components/live/guides-todo/app.tsx]
+import { Exome } from "exome";
+
+export class TodoStore extends Exome {
+  public completed = false;
+
+  constructor(public content: string) {
+    super();
+  }
+
+  public toggle() {
+    this.completed = !this.completed;
+  }
+}
+import { Exome } from "exome";
+import { TodoStore } from "./todo.store";
+
+export class TodoListStore extends Exome {
+  public todos: TodoStore[] = [];
+
+  public addTodo(todo: TodoStore) {
+    this.todos.push(todo);
+  }
+}
+// ---cut---
+import { getExomeId } from "exome";
+import { useStore } from "exome/react";
+import { TodoListStore } from "./todo-list.store";
+import { TodoStore } from "./todo.store";
+
+const todoListStore = new TodoListStore();
+
+// Fill store with some demo values
+todoListStore.addTodo(new TodoStore("Throw the trash out"));
+todoListStore.addTodo(new TodoStore("Work out"));
+
+function Todo({ todo }: { todo: TodoStore }) {
+  const { completed, content, toggle } = useStore(todo);
+
+  return (
+    <label>
+      <input type="checkbox" onChange={toggle} checked={completed} />
+      {content}
+    </label>
+  );
+}
+
+export function TodoList() {
+  const { todos, addTodo } = useStore(todoListStore);
+
+  return (
+    <ul>
+      {todos.map((todo) => (
+        <li key={getExomeId(todo)}>
+          <Todo todo={todo} />
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 ```
 
 <div className="live-code-preview">

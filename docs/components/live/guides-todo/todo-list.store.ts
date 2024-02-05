@@ -6,5 +6,6 @@ export class TodoListStore extends Exome {
 
   public addTodo(todo: TodoStore) {
     this.todos.push(todo);
+    todo.completed
   }
 }

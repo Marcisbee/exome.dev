@@ -1,5 +1,5 @@
 import { LiveGuidesTodoReact } from "../components/live/guides-todo";
-import componentRaw from "../components/live/guides-todo/index.tsx?raw";
+import { LiveGuidesIntegrationReact } from "../components/live/guides-integration";
 
 # Guides
 
@@ -306,4 +306,73 @@ Exome devtools is currently in alpha and may not be stable.
 :::
 
 ## Custom integration
-@TODO
+
+Every integration currently is based on `subscribe` function. For example this is react integration (it's a bit reduced for this example):
+
+```ts twoslash [exome/react]
+import { type Exome, subscribe } from "exome"
+import { useLayoutEffect, useState } from "react"
+
+export function useStore<T extends Exome>(store: T): Readonly<T> {
+  const [, render] = useState(0)
+
+  useLayoutEffect(
+    () => subscribe(store, () => render((n) => n + 1)),
+    [store],
+  )
+
+  return store
+}
+```
+
+This is basically it, there's a `subscribe`, that takes in store instance and then updates component whenever change event is fired. After component unmounts subscription is canceled (unsubscribed).
+
+Same recipe can be used for any other integration. Lets create some custom integration for our vanilla js counter app:
+
+:::code-group
+
+```ts twoslash [index.ts]
+// @noErrors
+import { subscribe } from "exome"
+import { CounterStore, counterStore } from "./counter.store"
+
+document.body.innerHTML = `
+  <button id="count"></button>
+`
+const counterButton = document.getElementById("count")
+counterButton.addEventListener("click", counterStore.increment)
+
+const unsubscribe = subscribe(counterStore, update) // [!code hl]
+
+function update(instance: CounterStore) { // [!code hl]
+  counterButton.innerText = instance.count // [!code hl]
+} // [!code hl]
+
+// Run initial update if needed since update
+// doesn't do it when first subscribed
+update(counterStore)
+```
+
+```ts twoslash [counter.store.ts] filename="counter.store.ts"
+// @noErrors
+import { Exome } from "exome"
+
+export class CounterStore extends Exome {
+  public count = 0
+
+  public increment() {
+    this.count += 1
+  }
+}
+
+export const counterStore = new CounterStore()
+```
+
+:::
+
+<div className="live-code-preview">
+<span>Live preview</span>
+<LiveGuidesIntegrationReact />
+</div>
+
+For other type of integrations that cannot be covered only by update event you can use [`addMiddleware`](/api/exome#function-addmiddleware) and [`onAction`](/api/exome#function-onaction) functions.

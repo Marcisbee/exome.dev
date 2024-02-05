@@ -99,7 +99,7 @@ export default defineConfig({
 					link: "/guides#devtools",
 				},
 				{
-					text: "@TODO: Custom integration",
+					text: "Custom integration",
 					link: "/guides#custom-integration",
 				},
 			],

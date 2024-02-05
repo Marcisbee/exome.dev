@@ -95,6 +95,7 @@
 	margin-bottom: 14px;
 }
 
+.counter-single-button > button,
 .live-counter > button {
 	display: inline-block;
 	align-items: center;
@@ -108,12 +109,18 @@
 	background: var(--vocs-color_codeTitleBackground);
 }
 
+.counter-single-button > button:hover,
 .live-counter > button:hover {
 	color: #fff;
 	background: var(--vocs-color_backgroundAccent);
 }
 
+.counter-single-button > button:active,
 .live-counter > button:active {
 	color: #fff;
 	background: var(--vocs-color_backgroundAccentHover);
+}
+
+.counter-single-button {
+  text-align: center;
 }

@@ -87,7 +87,7 @@ export default defineConfig({
 					link: "/guides#folder-structure",
 				},
 				{
-					text: "@TODO: Nested stores",
+					text: "Nested stores",
 					link: "/guides#nested-stores",
 				},
 				{

@@ -2,8 +2,12 @@
 	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
 	"files": {
 		"ignore": [
-			"snippets/*"
+			"snippets/*",
+			"dist/*"
 		]
+	},
+	"formatter": {
+		"indentStyle": "space"
 	},
 	"linter": {
 		"enabled": true,

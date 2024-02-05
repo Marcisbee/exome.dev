@@ -6,7 +6,7 @@ import { TodoStore } from "./todo.store";
 const todoListStore = new TodoListStore();
 
 // Fill store with some demo values
-todoListStore.addTodo(new TodoStore("Throw the trash out"));
+todoListStore.addTodo(new TodoStore("Take out trash"));
 todoListStore.addTodo(new TodoStore("Work out"));
 
 function Todo({ todo }: { todo: TodoStore }) {

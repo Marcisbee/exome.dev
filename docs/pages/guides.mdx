@@ -153,7 +153,7 @@ import { TodoStore } from "./todo.store";
 const todoListStore = new TodoListStore();
 
 // Fill store with some demo values
-todoListStore.addTodo(new TodoStore("Throw the trash out"));
+todoListStore.addTodo(new TodoStore("Take out trash"));
 todoListStore.addTodo(new TodoStore("Work out"));
 
 function Todo({ todo }: { todo: TodoStore }) {
@@ -191,7 +191,91 @@ export function TodoList() {
 Now we have fully functional todo store. You may notice that this app is not really complete as it's missing a way to add, delete and sort todos. This is covered in todo app tutorial.
 
 ## Testing
-@TODO
+
+As for testing goes there are 2 things that can go wrong here:
+
+### Snapshots
+
+Usually running tests with snapshots, we get some kind of string representation of object we're testing. For example in jest, snapshot testing HTMLElements turns them into something similar to html tree, Objects into stringified json etc.
+
+Exome store each have an id as symbol. Depending on configuration and environment, it may be displayed in snapshots.
+
+Other thing that might go wrong in snapshots is testing cyclic stores as for example jest will throw error instead of making a snapshot.
+
+For stores to work you can use `exome/jest` snapshot serializer. This works in `jest` and `vitest`. For other snapshot serializer implementations feel free to send in a PR.
+
+For jest setup:
+```json [jest.config.json]
+{
+  "snapshotSerializers": [
+    "./node_modules/exome/jest/serializer.js"
+  ]
+}
+```
+
+For vitest currently it's a bit more of a setup:
+```ts [vitest.setup.ts]
+import * as exomeSnapshotSerializer from "exome/jest/serializer.js"
+
+expect.addSnapshotSerializer({
+  serialize(val, config, indentation, depth, refs, printer) {
+    return exomeSnapshotSerializer.print(val, (val) =>
+      printer(val, config, indentation, depth, refs)
+    );
+  },
+  test: exomeSnapshotSerializer.test,
+})
+```
+
+And that's it, now you should be covered with presenting store name, showing circular stores and getting rid of exome id symbol. It should look something like this:
+
+```ts
+TodoListStore {
+  todos: [
+    TodoStore {
+      "content": "Take out thrash",
+      "completed": false,
+    },
+  ],
+}
+```
+
+### Mocking store
+
+Generally it's not advised to mock store, but if you really need it, it can be done using [`GhostExome`](/api/ghost).
+
+:::code-group
+
+```ts twoslash [counter.store.test.ts]
+// @noErrors
+import { GhostExome } from "exome/ghost"
+import { CounterStore } from "./counter.store.ts"
+
+jest.mock("./counter.store.ts", () => ({
+  CounterStore: class extends GhostExome {
+    count: 0,
+    increment: jest.fn(),
+  },
+}))
+
+// ...
+```
+
+```ts twoslash [counter.store.ts]
+import { Exome } from "exome"
+
+export class CounterStore extends Exome {
+  public count = 0
+
+  public increment() {
+    this.count += 1
+  }
+}
+```
+
+:::
+
+Note that using it results in it pretending to be store. No change detection will occur on actions defined on this ghost store and no events will be triggered.
 
 ## Devtools
 @TODO

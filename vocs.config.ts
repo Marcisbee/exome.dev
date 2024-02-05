@@ -91,7 +91,7 @@ export default defineConfig({
 					link: "/guides#nested-stores",
 				},
 				{
-					text: "@TODO: Testing",
+					text: "Testing",
 					link: "/guides#testing",
 				},
 				{

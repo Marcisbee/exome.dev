@@ -278,7 +278,32 @@ export class CounterStore extends Exome {
 Note that using it results in it pretending to be store. No change detection will occur on actions defined on this ghost store and no events will be triggered.
 
 ## Devtools
-@TODO
+
+Exome has a companion browser extension [Exome Developer Tools](https://chromewebstore.google.com/detail/exome-developer-tools/pcanmpamoedhpfpbjajlkpicbikbnhdg) that sits inside browser devtools panel. It waits for connection from any website, but your website must start the connection. This can be used for connecting in dev environment but not in production. Or even connect in dev environment and in production define some kind of dev mode for your user and then connect to devtools for debugging in production.
+
+Devtools contain detailed information about every store instance that is created and actions that are being triggered.
+
+![](https://lh3.googleusercontent.com/Ycf-jws--Lb8wlXXqJyRIA8nmgfsODZoJ3mLl_9-G7mBibqZFZzqBj5pdWEl0v8nM4s9V_96xbkbEYB02hpwCPRagw=s1280-w1280-h800)
+
+![](https://lh3.googleusercontent.com/ZrHePiQlxD5BCW00ENNJVpfvtyz7qHAZIhLsa1z_3bNSc4MR4Tk5t66zNHK5Oi28nrZ-wLSq63sg7MV5pVMwpC2-=s800-w800-h500)
+
+Use `unstableExomeDevtools` to connect your app to devtools
+
+```ts [Example] twoslash
+// @noErrors
+import { addMiddleware } from "exome"
+import { unstableExomeDevtools } from "exome/devtools"
+
+addMiddleware(
+  unstableExomeDevtools({
+    name: "App name",
+  })
+)
+```
+
+:::tip[NOTE]
+Exome devtools is currently in alpha and may not be stable.
+:::
 
 ## Custom integration
 @TODO

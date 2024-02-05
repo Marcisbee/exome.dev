@@ -95,7 +95,7 @@ export default defineConfig({
 					link: "/guides#testing",
 				},
 				{
-					text: "@TODO: Devtools",
+					text: "Devtools",
 					link: "/guides#devtools",
 				},
 				{

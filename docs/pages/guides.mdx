@@ -50,145 +50,170 @@ my-project/
 Now you may not follow these suggestions and maybe find some better way to handle things, might as well [open issue](https://github.com/Marcisbee/exome/issues) revealing that info with everyone.
 
 ## Nested stores
-{/* @TODO use different example so that it doesn't double todo app */}
 Exome is made to handle deeply nested stores with ease.
 
-Before exome there is usually one single store, that contains everything and any mutation to it, requires data to be repeater-drilled. But not in exome.
+Before exome there is usually one single store, that contains everything and any mutation to it, requires data to be reducer-drilled. But not in exome.
 
 Think of exome as atomic store. You can have as many stores as needed that each work just for themselves.
 
-Lets start with simple todo example. First we need store that handles single todo:
+To help visualize this, lets create a small family tree store with deeply nested stores.
 
-```ts twoslash [todo.store.ts]
-import { Exome } from "exome";
+First create member store that will contain info about one specific member of the tree:
 
-export class TodoStore extends Exome {
-  public completed = false;
+```ts twoslash [member.store.ts] filename="member.store.ts"
+import { Exome } from "exome"
 
-  constructor(public content: string) {
-    super();
+export class MemberStore extends Exome {
+  constructor(
+    public firstName: string,
+    public lastName: string,
+    public partner?: MemberStore,
+    public children: MemberStore[] = [],
+  ) {
+    super()
   }
 
-  public toggle() {
-    this.completed = !this.completed;
+  public setPartner(partner: MemberStore["partner"]) {
+    this.partner = partner
+
+    // Set both as members as partners at the same time
+    if (partner && partner.partner !== this) {
+      partner.setPartner(this)
+    }
+  }
+
+  public addChildren(...children: MemberStore["children"]) {
+    this.children.push(...children)
   }
 }
 ```
 
-We created `completed` property with default value `false`.
+This store includes some info about member, like first and last names. And some of the information is actually instances of the same store because if for example members "Catelyn Stark" and "Eddard Stark" are partners. And one of the children they have is "Robb Stark".
 
-However `content` we want to define every time we create a new todo so we'll do that in constructor.
+Ok So lets create an instance for this using `MemberStore`.
 
-And we need some way to update `comleted` status so that will be handled in `toggle` action.
-
-Next we need some store that handles list of todos:
-
-```ts twoslash [todo-list.store.ts]
+```ts twoslash [app.ts]
 // @noErrors
-import { Exome } from "exome";
+import { MemberStore } from "./member.store.ts"
 
-export class TodoStore extends Exome {
-  public completed = false;
+const robbStark = new MemberStore("Robb", "Stark")
+const catelynStark = new MemberStore("Catelyn", "Stark")
+const eddardStark = new MemberStore("Eddard", "Stark")
 
-  constructor(public content: string) {
-    super();
-  }
+catelynStark.setPartner(eddardStark)
 
-  public toggle() {
-    this.completed = !this.completed;
-  }
-}
-// ---cut---
-import { Exome } from "exome";
-import { TodoStore } from "./todo.store";
-
-export class TodoListStore extends Exome {
-  public todos: TodoStore[] = [];
-
-  public addTodo(todo: TodoStore) {
-    this.todos.push(todo);
-  }
-}
+catelynStark.addChildren(robbStark)
+eddardStark.addChildren(robbStark)
 ```
 
-Here we have a store (`TodoListStore`) that contains other stores (`TodoStore`) in `todos` property. This is what exome was designed for.
+Now all of the store instances are intertwined (there's even a cyclic reference of partners) and that's ok for Exome.
 
-Also we need a way to add new todo to the list, so that will be handled by `addTodo` action. This action expects already created `TodoStore` instance, but that is not a must, action can also create new `TodoStore` instance itself! I created it this way just to give extra control to dev creating a new todo item.
+We just need a unified store to make this tree complete.
 
-Ok so that's basically it, we created all that is needed for this app to work. Now lets create UI for this app.
-
-I'll use react for this example, but you can chose any other integration.
-
-```tsx twoslash [app.tsx]
+```ts twoslash [tree.store.ts] filename="tree.store.ts"
 // @noErrors
-import { Exome } from "exome";
+import { Exome } from "exome"
+import { MemberStore } from "./member.store.ts"
 
-export class TodoStore extends Exome {
-  public completed = false;
-
-  constructor(public content: string) {
-    super();
-  }
-
-  public toggle() {
-    this.completed = !this.completed;
+export class TreeStore extends Exome {
+  constructor(
+    public members: MemberStore[],
+  ) {
+    super()
   }
 }
-import { Exome } from "exome";
-import { TodoStore } from "./todo.store";
-
-export class TodoListStore extends Exome {
-  public todos: TodoStore[] = [];
-
-  public addTodo(todo: TodoStore) {
-    this.todos.push(todo);
-  }
-}
-// ---cut---
-import { getExomeId } from "exome";
-import { useStore } from "exome/react";
-import { TodoListStore } from "./todo-list.store";
-import { TodoStore } from "./todo.store";
-
-const todoListStore = new TodoListStore();
-
-// Fill store with some demo values
-todoListStore.addTodo(new TodoStore("Take out trash"));
-todoListStore.addTodo(new TodoStore("Work out"));
-
-function Todo({ todo }: { todo: TodoStore }) {
-  const { completed, content, toggle } = useStore(todo);
-
-  return (
-    <label>
-      <input type="checkbox" onChange={toggle} checked={completed} />
-      {content}
-    </label>
-  );
-}
-
-export function TodoList() {
-  const { todos, addTodo } = useStore(todoListStore);
-
-  return (
-    <ul>
-      {todos.map((todo) => (
-        <li key={getExomeId(todo)}>
-          <Todo todo={todo} />
-        </li>
-      ))}
-    </ul>
-  );
-}
-
 ```
 
-<div className="live-code-preview">
-<span>Live preview</span>
-<LiveGuidesTodoReact />
-</div>
+```ts twoslash [app.ts]
+// @noErrors
+import { MemberStore } from "./member.store.ts"
+import { TreeStore } from "./tree.store.ts" // [!code ++]
 
-Now we have fully functional todo store. You may notice that this app is not really complete as it's missing a way to add, delete and sort todos. This is covered in todo app tutorial.
+const robbStark = new MemberStore("Robb", "Stark")
+const catelynStark = new MemberStore("Catelyn", "Stark")
+const eddardStark = new MemberStore("Eddard", "Stark")
+
+catelynStark.setPartner(eddardStark)
+
+catelynStark.addChildren(robbStark)
+eddardStark.addChildren(robbStark)
+
+const starkFamilyTree = new TreeStore([ // [!code ++]
+  catelynStark, // [!code ++]
+  eddardStark, // [!code ++]
+]) // [!code ++]
+```
+
+Now this is what our store instance `startFamilyTree` looks like:
+
+```ts
+TreeStore {
+  members: [
+    MemberStore {
+      children: [
+        MemberStore {
+          children: [],
+          firstName: "Robb",
+          lastName: "Stark",
+        },
+      ],
+      firstName: "Catelyn",
+      lastName: "Stark",
+      partner: MemberStore {
+        children: [
+          MemberStore {
+            children: [],
+            firstName: "Robb",
+            lastName: "Stark",
+          },
+        ],
+        firstName: "Eddard",
+        lastName: "Stark",
+        partner: MemberStore [circular],
+      },
+    },
+    MemberStore {
+      children: [
+        MemberStore {
+          children: [],
+          firstName: "Robb",
+          lastName: "Stark",
+        },
+      ],
+      firstName: "Eddard",
+      lastName: "Stark",
+      partner: MemberStore {
+        children: [
+          MemberStore {
+            children: [],
+            firstName: "Robb",
+            lastName: "Stark",
+          },
+        ],
+        firstName: "Catelyn",
+        lastName: "Stark",
+        partner: MemberStore [circular],
+      },
+    },
+  ],
+}
+```
+
+You can see [circular] there and another thing to note is that "Robb Stark" is shared across multiple members. Each store here can act on themselves.
+
+For example if "Robb Stark" finds a partner we can just call action on that and store is updated and only related store instances will be updated.
+
+```ts twoslash [app.ts]
+// @noErrors
+import { MemberStore } from "./member.store.ts"
+import { TreeStore } from "./tree.store.ts"
+
+const robbStark = new MemberStore("Robb", "Stark")
+// ---cut---
+const talisaStark = new MemberStore("Talisa", "Stark")
+
+talisaStark.setPartner(robbStark)
+```
 
 ## Testing
 

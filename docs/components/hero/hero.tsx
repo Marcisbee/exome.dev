@@ -57,12 +57,12 @@ export function Hero() {
             </svg>
           </button>
 
-          <a
+          {/* <a
             href="/api/react"
             className="vocs_Anchor vocs_Link vocs_Link_accent_underlined vocs_ExternalLink"
           >
             <span>react</span>
-          </a>
+          </a> */}
         </div>
 
         <div>
@@ -97,12 +97,12 @@ export function Hero() {
             </svg>
           </button>
 
-          <a
+          {/* <a
             href="/api/preact"
             className="vocs_Anchor vocs_Link vocs_Link_accent_underlined vocs_ExternalLink"
           >
             <span>preact</span>
-          </a>
+          </a> */}
         </div>
 
         <div>
@@ -133,12 +133,12 @@ export function Hero() {
             </svg>
           </button>
 
-          <a
+          {/* <a
             href="/api/vue"
             className="vocs_Anchor vocs_Link vocs_Link_accent_underlined vocs_ExternalLink"
           >
             <span>vue</span>
-          </a>
+          </a> */}
         </div>
 
         <div>
@@ -165,12 +165,12 @@ export function Hero() {
             </svg>
           </button>
 
-          <a
+          {/* <a
             href="/api/svelte"
             className="vocs_Anchor vocs_Link vocs_Link_accent_underlined vocs_ExternalLink"
           >
             <span>svelte</span>
-          </a>
+          </a> */}
         </div>
 
         <div>
@@ -197,12 +197,12 @@ export function Hero() {
             </svg>
           </button>
 
-          <a
+          {/* <a
             href="/api/lit"
             className="vocs_Anchor vocs_Link vocs_Link_accent_underlined vocs_ExternalLink"
           >
             <span>lit</span>
-          </a>
+          </a> */}
         </div>
 
         <div>
@@ -229,12 +229,12 @@ export function Hero() {
             </svg>
           </button>
 
-          <a
+          {/* <a
             href="/api/angular"
             className="vocs_Anchor vocs_Link vocs_Link_accent_underlined vocs_ExternalLink"
           >
             <span>angular</span>
-          </a>
+          </a> */}
         </div>
 
         <div>
@@ -260,12 +260,12 @@ export function Hero() {
             </svg>
           </button>
 
-          <a
+          {/* <a
             href="/api/rxjs"
             className="vocs_Anchor vocs_Link vocs_Link_accent_underlined vocs_ExternalLink"
           >
             <span>rxjs</span>
-          </a>
+          </a> */}
         </div>
 
         <div>

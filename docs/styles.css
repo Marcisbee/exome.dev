@@ -25,7 +25,7 @@
   font-size: 20px;
   line-height: 2.4em;
   font-weight: 900;
-  margin-bottom: 18px;
+  margin-bottom: 12px;
   background: rgba(246, 132, 28, 0.15);
   color: #f6841c;
   border-radius: 12px;
@@ -36,7 +36,7 @@
   flex-flow: wrap;
 
   > div {
-    margin: 0 6px;
+    margin: 5px 6px;
 
     &:hover a {
       opacity: 1;

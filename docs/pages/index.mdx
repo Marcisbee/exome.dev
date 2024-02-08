@@ -7,12 +7,15 @@ showLogo: false
 import { HomePage } from 'vocs/components'
 
 import { Footer } from '../components/footer.tsx'
+import { Hero } from '../components/hero/hero.tsx'
 
 <HomePage.Root>
   <HomePage.Logo />
   <HomePage.Tagline>State manager for deeply nested states</HomePage.Tagline>
 
-<div className="landing-code">
+  <Hero />
+
+{/* <div className="landing-code">
 :::code-group
 
 ```bash [npm]
@@ -32,7 +35,7 @@ bun add exome
 ```
 
 :::
-</div>
+</div> */}
 
   <HomePage.Description>Exome includes integration for React, Preact, Vue, Svelte, Solid, Lit, Rxjs, Angular & No framework. Can be easily used in microfrontends architecture.</HomePage.Description>
   <HomePage.Buttons>

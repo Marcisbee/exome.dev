@@ -1,126 +1,397 @@
 .vocs_HomePage_logo {
-	height: 66px !important;
+  height: 66px !important;
 }
 
 .footer {
-	align-items: center;
-	display: flex;
-	flex-direction: column;
-	font-size: 14px;
-	font-weight: 400;
-	line-height: 1.5em;
-	margin-top: 5rem;
-	width: 100%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5em;
+  margin-top: 5rem;
+  width: 100%;
+}
+
+.hero-counter {
+  display: block;
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid var(--vocs-color_border);
+  max-width: 90%;
+}
+
+.hero-counter-count {
+  font-size: 20px;
+  line-height: 2.4em;
+  font-weight: 900;
+  margin-bottom: 18px;
+  background: rgba(246, 132, 28, 0.15);
+  color: #f6841c;
+  border-radius: 12px;
+}
+
+.hero-buttons {
+  display: flex;
+  flex-flow: wrap;
+
+  > div {
+    margin: 0 6px;
+
+    &:hover a {
+      opacity: 1;
+    }
+  }
+
+  & button + a {
+    margin-top: 8px;
+    display: block;
+    background: var(--vocs-color_background4);
+    border: 1px solid var(--vocs-color_border);
+    border-radius: var(--vocs-borderRadius_4);
+    line-height: 1.4em;
+    opacity: 0;
+    margin-bottom: -24px;
+    position: relative;
+    z-index: 2;
+
+    &::after {
+      margin: 0 0 2px 0;
+    }
+
+    > span {
+      display: none;
+    }
+  }
+
+  & button {
+    --button-bg-color: transparent;
+    display: block;
+    width: 50px;
+    height: 50px;
+    color: #fff;
+    font-size: 26px;
+    text-align: center;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    position: relative;
+    z-index: 1;
+    background-color: var(--button-bg-color);
+
+    & * {
+      pointer-events: none !important;
+    }
+
+    &:hover {
+      box-shadow: inset 0 0 0 2px var(--vocs-color_background);
+    }
+
+    &::before {
+      display: block;
+      width: 10px;
+      height: 10px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      content: "";
+      border-radius: 50%;
+      z-index: -1;
+    }
+
+    &[data-play]::before {
+      animation: reaction-add-burst ease-out 0.2s forwards;
+    }
+
+    &:active {
+      border-width: 3px;
+      font-size: 22px;
+    }
+
+    > svg {
+      display: block;
+      margin: 0 auto;
+    }
+
+    &.hero-button-react {
+      --button-bg-color: #0074a6;
+      background-color: #0074a6;
+    }
+
+    &.hero-button-preact {
+      --button-bg-color: #673ab8;
+      background-color: #673ab8;
+    }
+
+    &.hero-button-vue {
+      --button-bg-color: #41b883;
+      background-color: #41b883;
+    }
+
+    &.hero-button-svelte {
+      --button-bg-color: #ff3e00;
+      background-color: #ff3e00;
+    }
+
+    &.hero-button-lit {
+      --button-bg-color: #324fff;
+      background-color: #324fff;
+    }
+
+    &.hero-button-angular {
+      --button-bg-color: #e90464;
+      background-color: #e90464;
+    }
+
+    &.hero-button-rxjs {
+      --button-bg-color: #de1c85;
+      background-color: #de1c85;
+    }
+  }
+
+  & div > a:first-child {
+    display: block;
+    width: 50px;
+    height: 50px;
+    color: #fff;
+    font-size: 26px;
+    text-align: center;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    position: relative;
+    z-index: 1;
+    background: var(--vocs-color_background4);
+    color: var(--vocs-color_text);
+
+    &:hover {
+      background: var(--vocs-color_background3);
+    }
+  }
+}
+
+@keyframes reaction-add-burst {
+  0% {
+    width: 10px;
+    height: 10px;
+    box-shadow:
+      0 0 0 #f6841c,
+      0 0 0 #f6841c,
+      0 0 0 #f6841c,
+      0 0 0 #f6841c,
+      0 0 0 #f6841c,
+      0 0 0 #f6841c,
+      0 0 0 #f6841c,
+      0 0 0 #f6841c,
+      0 0 0 #f6841c,
+      0 0 0 #f6841c,
+      0 0 0 #f6841c,
+      0 0 0 #f6841c,
+      0 0 0 var(--button-bg-color),
+      0 0 0 var(--button-bg-color),
+      0 0 0 var(--button-bg-color),
+      0 0 0 var(--button-bg-color),
+      0 0 0 var(--button-bg-color),
+      0 0 0 var(--button-bg-color),
+      0 0 0 var(--button-bg-color),
+      0 0 0 var(--button-bg-color),
+      0 0 0 var(--button-bg-color),
+      0 0 0 var(--button-bg-color),
+      0 0 0 var(--button-bg-color),
+      0 0 0 var(--button-bg-color);
+  }
+  50% {
+    box-shadow:
+      30px 0 0 #f6841c,
+      -30px 0 0 #f6841c,
+      0 30px 0 #f6841c,
+      0 -30px 0 #f6841c,
+      27px 0 0 #f6841c,
+      -27px 0 0 #f6841c,
+      0 27px 0 #f6841c,
+      0 -27px 0 #f6841c,
+      25px 0 0 #f6841c,
+      -25px 0 0 #f6841c,
+      0 25px 0 #f6841c,
+      0 -25px 0 #f6841c,
+      20px 20px 0 var(--button-bg-color),
+      -20px -20px 0 var(--button-bg-color),
+      -20px 20px 0 var(--button-bg-color),
+      20px -20px 0 var(--button-bg-color),
+      18px 18px 0 var(--button-bg-color),
+      -18px -18px 0 var(--button-bg-color),
+      -18px 18px 0 var(--button-bg-color),
+      18px -18px 0 var(--button-bg-color),
+      16px 16px 0 var(--button-bg-color),
+      -16px -16px 0 var(--button-bg-color),
+      -16px 16px 0 var(--button-bg-color),
+      16px -16px 0 var(--button-bg-color);
+  }
+  70% {
+    box-shadow:
+      36px 0 0 #f6841c,
+      -36px 0 0 #f6841c,
+      0 36px 0 #f6841c,
+      0 -36px 0 #f6841c,
+      35px 0 0 #f6841c,
+      -35px 0 0 #f6841c,
+      0 35px 0 #f6841c,
+      0 -35px 0 #f6841c,
+      34px 0 0 #f6841c,
+      -34px 0 0 #f6841c,
+      0 34px 0 #f6841c,
+      0 -34px 0 #f6841c,
+      26px 26px 0 var(--button-bg-color),
+      -26px -26px 0 var(--button-bg-color),
+      -26px 26px 0 var(--button-bg-color),
+      26px -26px 0 var(--button-bg-color),
+      26px 26px 0 var(--button-bg-color),
+      -26px -26px 0 var(--button-bg-color),
+      -26px 26px 0 var(--button-bg-color),
+      26px -26px 0 var(--button-bg-color),
+      25px 25px 0 var(--button-bg-color),
+      -25px -25px 0 var(--button-bg-color),
+      -25px 25px 0 var(--button-bg-color),
+      25px -25px 0 var(--button-bg-color);
+  }
+  100% {
+    width: 2px;
+    height: 2px;
+    box-shadow:
+      42px 0 0 transparent,
+      -42px 0 0 transparent,
+      0 42px 0 transparent,
+      0 -42px 0 transparent,
+      42px 0 0 transparent,
+      -42px 0 0 transparent,
+      0 42px 0 transparent,
+      0 -42px 0 transparent,
+      42px 0 0 transparent,
+      -42px 0 0 transparent,
+      0 42px 0 transparent,
+      0 -42px 0 transparent,
+      32px 32px 0 transparent,
+      -32px -32px 0 transparent,
+      -32px 32px 0 transparent,
+      32px -32px 0 transparent,
+      32px 32px 0 transparent,
+      -32px -32px 0 transparent,
+      -32px 32px 0 transparent,
+      32px -32px 0 transparent,
+      32px 32px 0 transparent,
+      -32px -32px 0 transparent,
+      -32px 32px 0 transparent,
+      32px -32px 0 transparent;
+  }
 }
 
 .landing-code {
-	max-width: 270px;
-	width: 100%;
-	text-align: center;
+  max-width: 270px;
+  width: 100%;
+  text-align: center;
 }
 
 .landing-code .vocs_Tabs_list {
-	display: flex;
-	justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .api-explore {
-	display: block;
+  display: block;
 }
 
 .api-explore-comment {
-	display: block;
-	font-size: 0.84em;
-	opacity: 0.8;
-	margin-bottom: 4px;
+  display: block;
+  font-size: 0.84em;
+  opacity: 0.8;
+  margin-bottom: 4px;
 }
 
 .api-explore .vocs_CodeBlock {
-	border: 0;
+  border: 0;
 }
 
 .api-explore .vocs_CodeBlock pre {
-	padding: 0;
-	background: transparent;
-	border-radius: 0;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
 }
 
 .api-explore .vocs_CodeBlock pre > code > [data-line] {
-	padding: 0;
-	border: 0;
+  padding: 0;
+  border: 0;
 }
 
 .api-explore .vocs_CopyButton {
-	display: none !important;
+  display: none !important;
 }
 
 .api-anchor .vocs_Heading {
-	font-size: 0;
+  font-size: 0;
 }
 
 .live-code-preview {
-	border: 1px solid var(--vocs-color_codeInlineBorder);
-	border-radius: var(--vocs-borderRadius_4);
-	margin-top: calc(calc(0px - var(--vocs-borderRadius_4)) - var(--vocs-space_24));
-	border-top-left-radius: 0;
-	border-top-right-radius: 0;
-	background: var(--vocs-color_background);
-	padding: 30px 20px 30px 20px;
-	position: relative;
-	z-index: 1;
+  border: 1px solid var(--vocs-color_codeInlineBorder);
+  border-radius: var(--vocs-borderRadius_4);
+  margin-top: calc(calc(0px - var(--vocs-borderRadius_4)) - var(--vocs-space_24));
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  background: var(--vocs-color_background);
+  padding: 30px 20px 30px 20px;
+  position: relative;
+  z-index: 1;
 }
 
 .live-code-preview > span {
-	display: block;
-	position: absolute;
-	top: -1px;
-	font-size: 0.6em;
-	line-height: 1em;
-	padding: 6px 10px;
-	background-color: var(--vocs-color_codeBlockBackground);
-	border: 1px solid var(--vocs-color_codeInlineBorder);
-	border-top: 0;
-	border-radius: 0 0 var(--vocs-borderRadius_4) var(--vocs-borderRadius_4);
+  display: block;
+  position: absolute;
+  top: -1px;
+  font-size: 0.6em;
+  line-height: 1em;
+  padding: 6px 10px;
+  background-color: var(--vocs-color_codeBlockBackground);
+  border: 1px solid var(--vocs-color_codeInlineBorder);
+  border-top: 0;
+  border-radius: 0 0 var(--vocs-borderRadius_4) var(--vocs-borderRadius_4);
 }
 
 .live-counter {
-	text-align: center;
+  text-align: center;
 }
 
 .live-counter > h1 {
-	display: block;
-	font-size: 2.4em;
-	line-height: 1em;
-	font-weight: bold;
-	margin-bottom: 14px;
+  display: block;
+  font-size: 2.4em;
+  line-height: 1em;
+  font-weight: bold;
+  margin-bottom: 14px;
 }
 
 .counter-single-button > button,
 .live-counter > button {
-	display: inline-block;
-	align-items: center;
-	margin: 0 4px;
-	font-size: 1em;
-	line-height: 1em;
-	font-weight: bold;
-	width: 2em;
-	height: 2em;
-	border: 0;
-	background: var(--vocs-color_codeTitleBackground);
+  display: inline-block;
+  align-items: center;
+  margin: 0 4px;
+  font-size: 1em;
+  line-height: 1em;
+  font-weight: bold;
+  width: 2em;
+  height: 2em;
+  border: 0;
+  background: var(--vocs-color_codeTitleBackground);
 }
 
 .live-tutorial-todo form button:hover,
 .counter-single-button > button:hover,
 .live-counter > button:hover {
-	color: #fff;
-	background: var(--vocs-color_backgroundAccent);
+  color: #fff;
+  background: var(--vocs-color_backgroundAccent);
 }
 
 .live-tutorial-todo form button:active,
 .counter-single-button > button:active,
 .live-counter > button:active {
-	color: #fff;
-	background: var(--vocs-color_backgroundAccentHover);
+  color: #fff;
+  background: var(--vocs-color_backgroundAccentHover);
 }
 
 .counter-single-button {
@@ -137,8 +408,8 @@
 }
 
 .live-tutorial-todo input {
-	font-size: 0.9em;
-	line-height: 2em;
+  font-size: 0.9em;
+  line-height: 2em;
   padding: 0 10px;
   border: 1px solid var(--vocs-color_codeInlineBorder);
   border-radius: var(--vocs-borderRadius_4);
@@ -146,15 +417,15 @@
 
 .live-tutorial-todo form button {
   margin-left: 10px;
-	display: inline-block;
-	align-items: center;
-	margin: 0 4px;
-	font-size: 0.9em;
-	line-height: 1em;
-	height: 2em;
-	border: 0;
+  display: inline-block;
+  align-items: center;
+  margin: 0 4px;
+  font-size: 0.9em;
+  line-height: 1em;
+  height: 2em;
+  border: 0;
   padding: 0 10px;
-	background: var(--vocs-color_codeTitleBackground);
+  background: var(--vocs-color_codeTitleBackground);
   border-radius: var(--vocs-borderRadius_4);
 }
 

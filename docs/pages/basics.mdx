@@ -1,6 +1,19 @@
 # Basics
 
 ## Stores
+{/*
+To set a mental model on how to think about this, lets start with this:
+
+<img src="/action-diagram.svg" alt="diagram that's explained below" />
+
+- Your app can have many stores;
+- Each store can have multiple instances;
+- Instance can update view;
+- Anything can trigger actions not only view;
+- Actions update instances;
+- Effects listen for action calls.
+
+--- */}
 
 Store can be a single class or multiple ones. It's suggested keeping stores small, in terms of property sizes. Any piece of store you have, must use a class that extends `Exome`.
 

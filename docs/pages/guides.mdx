@@ -90,7 +90,7 @@ export class MemberStore extends Exome {
 
 This store includes some info about member, like first and last names. And some of the information is actually instances of the same store because if for example members "Catelyn Stark" and "Eddard Stark" are partners. And one of the children they have is "Robb Stark".
 
-Ok So lets create an instance for this using `MemberStore`.
+Create an instance for this using `MemberStore`.
 
 ```ts twoslash [app.ts]
 // @noErrors
@@ -219,9 +219,12 @@ talisaStark.setPartner(robbStark)
 
 As for testing goes there are 2 things that can go wrong here:
 
+- [Snapshots](#snapshots);
+- [Mocking store](#mocking-store).
+
 ### Snapshots
 
-Usually running tests with snapshots, we get some kind of string representation of object we're testing. For example in jest, snapshot testing HTMLElements turns them into something similar to html tree, Objects into stringified json etc.
+Usually running tests with snapshots, we get some kind of string representation of object we're testing. For example in jest, snapshot testing `HTMLElement` turns them into something similar to html tree, Objects into stringified json etc.
 
 Exome store each have an id as symbol. Depending on configuration and environment, it may be displayed in snapshots.
 

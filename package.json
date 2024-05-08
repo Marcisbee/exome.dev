@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "exome": "^2.4.0",
-    "vocs": "latest"
+    "vocs": "^1.0.0-alpha.47"
   },
   "devDependencies": {
     "@angular/core": "^17.1.2",

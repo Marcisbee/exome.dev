@@ -243,3 +243,39 @@ todoStore.addTodo({ text: "Workout", done: false })
 // @log: log: "New item: Workout"
 // @log: log: "Item count: 0"
 ```
+
+### Get result from action
+
+Effects can also detect if action failed or succeeded and with what response.
+
+```ts twoslash
+// @noErrors
+// [!include ~/snippets/basics/store.ts:import]
+
+// [!include ~/snippets/basics/store.ts:classStart]
+// [!include ~/snippets/basics/store.ts:property]
+// [!include ~/snippets/basics/store.ts:action]
+// [!include ~/snippets/basics/store.ts:classEnd]
+// ---cut---
+import { onAction } from "exome"
+
+onAction(TodoStore, "addTodo", (
+  instance,
+  action,
+  args,
+  error, // [!code hl] // [!code focus]
+  response, // [!code hl] // [!code focus]
+) => {
+  if (error) { // [!code hl] // [!code focus]
+    // action did throw error // [!code hl] // [!code focus]
+  } // [!code hl] // [!code focus]
+  // [!code hl] // [!code focus]
+  console.log(response) // action returned something // [!code hl] // [!code focus]
+})
+```
+
+[Live code playground](https://dune.land/dune/47b9283f-0ef8-4bb5-bb92-bd914bc192ca)
+
+This is only possible when `onAction` is set to receive event `after` action is triggered (that is the default behaviour).
+
+If actions are async, then response and throw returns awaited response, not promise.

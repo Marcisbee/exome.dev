@@ -107,7 +107,8 @@ function onAction<T extends Exome>(
     instance: T,
     action: "NEW" | "LOAD_STATE" | keyof T,
     payload: any[],
-    error?: Error
+    error?: Error,
+    response?: any
   ) => void,
   type?: "before" | "after",
 ): Unsubscribe;
@@ -184,7 +185,7 @@ function runMiddleware(
   instance: Exome,
   action: string,
   payload: any[],
-): (error?: Error) => void;
+): (error?: Error, response?: any) => void;
 ```
 </div>
 
@@ -199,7 +200,7 @@ type Middleware = (
   instance: Exome,
   action: string,
   payload: any[],
-) => void | ((error?: Error) => void);
+) => void | ((error?: Error, response?: any) => void);
 ```
 
 </div>

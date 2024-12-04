@@ -19,7 +19,7 @@ class CounterStore extends Exome {
 
 addMiddleware((instance, action, payload) => {
   console.log("start", action)
-  return (error) => {
+  return (error, response) => {
     console.log("end", action)
   }
 });
@@ -318,4 +318,3 @@ setExomeId(userStore, "CUSTOM")
 // @log: "UserStore-CUSTOM"
 getExomeId(userStore)
 ```
-

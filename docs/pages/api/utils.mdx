@@ -12,7 +12,7 @@ import {
 ## function getActionStatus
 </div>
 <p className="api-explore-comment">
-Subscribes to specific action in specific instance and returns satus about that action.
+Subscribes to specific action in specific instance and returns status about that action.
 </p>
 ```ts twoslash
 // @noErrors
@@ -47,7 +47,7 @@ import { Exome } from "exome";
 import { getActionStatus } from "exome/utils";
 // ---cut---
 class Store extends Exome {
-  public get satus() {
+  public get status() {
     return getActionStatus(this, "fetchRemoteData")
   }
 

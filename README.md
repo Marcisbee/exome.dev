@@ -25,14 +25,14 @@ npm test
 
 Checks exercise the built site with and without JavaScript, Markdown discovery,
 legacy URLs, local destinations, code copying, mobile navigation, and runnable
-documentation examples. CI builds and checks pull requests and main.
+documentation examples, plus the shared counter with pointer and keyboard input. CI builds and checks pull requests and main.
 
 ## Publish
 
 Run `npm ci && npm run build` and publish **docs/dist** at the domain root.
 The output directory and build command match the previous Vocs site so existing
 static-host settings can remain in place. Configure Node.js 22+ on the host.
-No application server or browser framework runtime is needed. Existing URLs
+No application server is needed. The optional counter bundles Exome and Radi for the browser. Existing URLs
 such as `/basics/` and `/api/react/` redirect to the corresponding guide section.
 An unknown URL should serve `404.html` with a 404 status, not an SPA fallback.
 
@@ -49,6 +49,7 @@ successful deployment or reverting the site replacement and rebuilding.
   Unsupported Markdown syntax fails the build rather than silently disappearing.
 - `site/style.css`: Radi docs layout, light/dark palettes, responsive navigation.
 - `site/client.js`: optional copy buttons and current-section indication.
+- `site/counter.mjs` and `site/counter-view.mjs`: the shared Exome counter, rendered with Radi; the original framework icons live in `site/framework-icons`.
 - `scripts/build.mjs`: Radi SSG routes, static assets, and legacy entry points.
 
 The page shell, shared UI, stylesheet, and navigation script are copied from

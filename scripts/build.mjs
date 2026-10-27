@@ -1,3 +1,4 @@
+import { build } from 'esbuild';
 import { mkdir, readFile, writeFile, cp, rm } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { generateStaticSite } from 'radi/static';
@@ -20,6 +21,7 @@ const routes = [{
   path: '/', title: 'Exome — State management reference',
   head: [
     h('script', { src: '/client.js', defer: true }),
+    h('script', { src: '/counter.js', type: 'module' }),
     h('link', { rel: 'stylesheet', href: '/style.css' }),
     h('link', { rel: 'icon', href: '/icon.svg', type: 'image/svg+xml' }),
     h('link', { rel: 'canonical', href: 'https://exome.dev/' }),
@@ -42,6 +44,8 @@ for (const name of ['style.css', 'client.js', 'icon.svg', 'inter.woff2', 'ibm-pl
   'inter-license.txt', 'ibm-plex-serif-license.txt', 'jetbrains-mono-license.txt', 'radi-license.txt']) {
   await cp(`site/${name}`, `${outDir}/${name}`);
 }
+await cp('site/framework-icons', `${outDir}/framework-icons`, { recursive: true });
+await build({ entryPoints: ['site/counter.mjs'], outfile: `${outDir}/counter.js`, bundle: true, minify: true, format: 'esm', platform: 'browser', target: 'es2022' });
 await writeFile(`${outDir}/index.md`, markdown);
 await writeFile(`${outDir}/llms.txt`, '# Exome\n\n> Class-based state management. Reference for Exome 2.9.0.\n\n## Documentation\n\n- [Complete guide](https://exome.dev/index.md): Installation, actions, subscriptions, adapters, persistence, API notes, and limitations.\n- [HTML guide](https://exome.dev/): The same content for browser readers.\n');
 await writeFile(`${outDir}/CNAME`, 'exome.dev\n');

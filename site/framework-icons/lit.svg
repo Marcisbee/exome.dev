@@ -1,0 +1,15 @@
+<svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="0.8em"
+              height="1em"
+              viewBox="0 0 256 320"
+            >
+              <path
+                fill="#00E8FF"
+                d="M128 256V128l64-64v128zM0 256l64 64l9.202-60.602L64 192l-37.542 23.71z"
+              />
+              <path
+                fill="#fff"
+                d="M64 192V64l64-64v128zm128 128V192l64-64v128zM0 256V128l64 64z"
+              />
+            </svg>

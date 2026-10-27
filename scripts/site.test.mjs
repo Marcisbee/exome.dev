@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 import { readFile } from 'node:fs/promises';
 import { stripTypeScriptTypes } from 'node:module';
-import { chromium } from '@playwright/test';
+import { chromium, expect } from '@playwright/test';
 import { lexer } from 'marked';
 
 const origin = 'http://127.0.0.1:4322';
@@ -146,4 +146,37 @@ export { fixture };`)));
   assert.deepEqual(radiModule.values, [initialCount, initialCount + 1]);
   assert.equal(counter.count, initialCount + 2);
 
+});
+
+test('framework buttons share one counter with pointer, keyboard, and reduced-motion input', async () => {
+  const context = await browser.newContext();
+  const page = await context.newPage();
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.goto(origin);
+  const count = page.getByLabel('Shared count', { exact: true });
+  assert.equal(await count.textContent(), '0');
+  const buttons = page.getByRole('group', { name: 'Shared counter demo' }).getByRole('button');
+  for (let i = 0; i < await buttons.count(); i++) {
+    await buttons.nth(i).click();
+    await expect(count).toHaveText(String(i + 1));
+  }
+  // Several flights must each increment exactly once, even if a resize interrupts them.
+  await buttons.first().click({ clickCount: 3, delay: 40 });
+  await page.setViewportSize({ width: 1100, height: 900 });
+  const total = await buttons.count() + 3;
+  await expect(count).toHaveText(String(total));
+  assert.equal(await page.locator('.counter-flight').count(), 0);
+  await buttons.first().focus();
+  await page.keyboard.press('Enter');
+  await page.keyboard.press('Space');
+  assert.equal(await count.textContent(), String(total + 2));
+  await page.emulateMedia({ reducedMotion: 'reduce', colorScheme: 'dark' });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await buttons.last().click();
+  assert.equal(await count.textContent(), String(total + 3));
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
+  assert.equal(await page.locator('.counter-flight').count(), 0);
+  assert.deepEqual(errors, []);
+  await context.close();
 });

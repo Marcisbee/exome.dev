@@ -1,0 +1,302 @@
+@font-face {
+  font-family: 'Inter';
+  src: url('/inter.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'IBM Plex Serif';
+  src: url('/ibm-plex-serif.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/jetbrains-mono.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+:root {
+  color-scheme: light dark;
+  font-family: Inter, system-ui, sans-serif;
+  color: var(--text);
+  background: var(--background);
+  font-synthesis: none;
+  --accent: #7551b9;
+  --text: #302a3e;
+  --background: #fff;
+  --muted: #78717f;
+  --secondary: #625c6a;
+  --border: #eeeaf3;
+  --surface: #f8f6fb;
+  --brand: #554274;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+}
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+:is(a, button, summary, pre, .table-scroll):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+button {
+  font: inherit;
+}
+button,
+summary {
+  cursor: pointer;
+}
+button:active {
+  transform: scale(.97);
+}
+[hidden] {
+  display: none !important;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--brand);
+  font-family: 'IBM Plex Serif', Georgia, serif;
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: -.8px;
+  line-height: 1.25;
+}
+.brand img {
+  display: block;
+}
+.brand:hover {
+  text-decoration: none;
+}
+.sidebar-brand {
+  margin-bottom: 24px;
+}
+.github {
+  display: block;
+  font-size: 13px;
+  padding: 12px 0;
+  border-top: 1px solid var(--border);
+}
+.layout {
+  display: grid;
+  grid-template-columns: 168px minmax(0, 800px);
+  gap: 32px;
+  max-width: 1160px;
+  margin: auto;
+  padding: 0 24px;
+}
+.sidebar {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  max-height: 100dvh;
+  overflow-y: auto;
+  padding: 24px 0;
+}
+.nav-group {
+  margin-bottom: 16px;
+}
+.nav-group p {
+  margin: 0 0 7px;
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+}
+.nav-group a {
+  display: block;
+  padding: 5px 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.nav-group a[aria-current] {
+  color: var(--accent);
+  font-weight: 600;
+}
+main {
+  min-width: 0;
+  padding-top: 24px;
+}
+h1 {
+  font-family: 'IBM Plex Serif', Georgia, serif;
+  font-size: 30px;
+  line-height: 1.25;
+  letter-spacing: -.8px;
+  font-weight: 600;
+  margin: 0 0 12px;
+}
+h2 {
+  font-size: 23px;
+  line-height: 1.4;
+  letter-spacing: -.5px;
+  font-weight: 600;
+  margin: 0 0 14px;
+}
+h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 18px 0 8px;
+  scroll-margin-top: 32px;
+}
+p {
+  color: var(--secondary);
+  margin: 0 0 12px;
+}
+.heading-link {
+  color: inherit;
+}
+.heading-link:hover {
+  text-decoration: none;
+}
+.code {
+  margin: 12px 0 16px;
+  background: var(--surface);
+  border-radius: 4px;
+  overflow: hidden;
+}
+figcaption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px 0;
+  font-size: 11px;
+  color: var(--muted);
+}
+pre {
+  margin: 0;
+  padding: 8px 14px 12px;
+  overflow-x: auto;
+  font: 12px/1.6 'JetBrains Mono', ui-monospace, monospace;
+  tab-size: 2;
+}
+pre code {
+  font: inherit;
+}
+.copy {
+  border: 0;
+  background: none;
+  color: var(--muted);
+  padding: 4px 0 4px 12px;
+  min-height: 32px;
+  font-size: 11px;
+}
+.copy:hover {
+  color: var(--accent);
+}
+footer {
+  margin-top: 32px;
+  border-top: 1px solid var(--border);
+  padding: 24px 0 36px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.skip {
+  position: fixed;
+  top: -100px;
+  z-index: 5;
+  padding: 10px;
+  background: var(--background);
+}
+.skip:focus {
+  top: 10px;
+}
+.mobile-menu {
+  display: none;
+}
+@media (max-width: 767px) {
+  .brand {
+    font-size: 28px;
+  }
+  .layout {
+    display: block;
+    padding: 0 22px;
+  }
+  .sidebar {
+    display: none;
+  }
+  .mobile-menu {
+    display: block;
+    padding: 20px 22px 0;
+  }
+  .mobile-menu .sidebar-brand {
+    margin-bottom: 0;
+    padding-bottom: 18px;
+    border-bottom: 2px solid color-mix(in srgb, var(--accent) 20%, transparent);
+  }
+  main {
+    padding-top: 20px;
+  }
+  h1 {
+    font-size: 28px;
+  }
+  .copy {
+    min-height: 40px;
+  }
+  footer {
+    flex-wrap: wrap;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  button:active {
+    transform: none;
+  }
+}
+
+pre code span {
+  color: var(--code-light);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --accent: #bd9aef;
+    --text: #eee8f5;
+    --background: #19161e;
+    --muted: #aaa1b5;
+    --secondary: #c3bacd;
+    --border: #38313f;
+    --surface: #24202c;
+    --brand: #d2b9f3;
+  }
+  pre code span {
+    color: var(--code-dark);
+  }
+}
+
+.version { display: block; color: var(--muted); font-size: 11px; margin: 8px 0 0 42px; }
+.eyebrow { font-size: 10px; letter-spacing: .1em; color: var(--muted); margin-bottom: 12px; }
+main > h1 + p { font-size: 17px; max-width: 640px; }
+main > h2 { margin: 40px 0 14px; scroll-margin-top: 24px; }
+main > h3 { scroll-margin-top: 24px; }
+li { color: var(--secondary); margin: 6px 0; }
+li p { margin: 0; }
+p code, li code, td code { font: .88em 'JetBrains Mono', monospace; color: var(--text); overflow-wrap: anywhere; }
+.table-scroll { overflow-x: auto; margin: 16px 0; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
+th { color: var(--text); font-weight: 600; }
+th, td { padding: 12px 14px 12px 0; border-bottom: 1px solid var(--border); vertical-align: top; }
+td { color: var(--secondary); min-width: 140px; }
+summary { padding: 14px 0; color: var(--accent); font-size: 14px; }
+.not-found { max-width: 700px; margin: 48px auto; padding: 24px; }
+@media (max-width: 767px) {
+  .mobile-menu details[open] { padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+  .mobile-menu .nav-group a { padding: 12px 0; }
+  pre { font-size: 12px; }
+}

@@ -30,6 +30,15 @@ test('the static guide exposes complete examples and working destinations withou
   assert.match(response.headers.get('content-type'), /text\/markdown/);
   const markdown = await response.text();
   const examples = lexer(markdown).filter(token => token.type === 'code').map(token => token.text);
+  const pkg = JSON.parse(await readFile(new URL(import.meta.resolve('exome/package.json')), 'utf8'));
+  for (const entry of Object.keys(pkg.exports).filter(entry => entry !== './package.json')) {
+    const name = entry === '.' ? 'exome' : `exome/${entry.slice(2)}`;
+    const id = name.replaceAll('/', '-');
+    const section = page.locator(`section[id="${id}"]`);
+    assert.equal(await section.count(), 1, `Missing reference for ${name}`);
+    assert.ok(await section.locator('table, pre').count(), `Missing contract or example for ${name}`);
+    assert.equal(await page.getByRole('navigation', { name: 'Documentation', exact: true }).getByRole('link', { name, exact: true }).count(), 1);
+  }
   assert.ok(examples.length > 5);
   assert.deepEqual(await page.locator('pre code').allTextContents(), examples);
   const destinations = await page.locator('a[href], link[href], script[src], img[src]').evaluateAll(nodes =>
@@ -102,7 +111,7 @@ test('the documented store, async, and persistence examples run against the docu
   const tokens = lexer(await readFile('site/guide.md', 'utf8'));
   const example = heading => tokens.slice(tokens.findIndex(token => token.type === 'heading' && token.text === heading) + 1).find(token => token.type === 'code').text;
   const moduleURL = source => `data:text/javascript;base64,${Buffer.from(stripTypeScriptTypes(source, { mode: 'transform' })).toString('base64')}`;
-  const resolveImports = source => source.replaceAll("'exome'", JSON.stringify(import.meta.resolve('exome'))).replaceAll("'exome/state'", JSON.stringify(import.meta.resolve('exome/state')));
+  const resolveImports = source => source.replace(/'exome(?:\/[^']+)?'/g, specifier => JSON.stringify(import.meta.resolve(specifier.slice(1, -1))));
   const { counter } = await import(moduleURL(resolveImports(example('Stores and actions'))));
   assert.equal(counter.count, 1);
   const { increment } = counter;
@@ -123,4 +132,12 @@ test('the documented store, async, and persistence examples run against the docu
   assert.equal(result.list.items[0].done, false);
   result.list.items[0].toggle();
   assert.equal(result.list.items[0].done, true);
+  const statusModule = await import(moduleURL(resolveImports(`${example('exome/utils')}
+export { status };`)));
+  assert.equal(statusModule.status.loading, false);
+  assert.deepEqual(statusModule.status.response, ['result']);
+  const ghostModule = await import(moduleURL(resolveImports(`${example('exome/ghost')}
+export { fixture };`)));
+  assert.equal(ghostModule.fixture.count, 3);
+
 });

@@ -12,10 +12,9 @@ const content = await page(markdown);
 const legacy = {
   'getting-started': 'install', basics: 'stores-and-actions', advanced: 'action-effects-and-middleware',
   guides: 'nested-stores', 'tutorials/todo-app': 'nested-stores',
-  'api/exome': 'stores-and-actions', 'api/state': 'save-and-load',
-  'api/utils': 'api-notes', 'api/ghost': 'debug-and-test', 'api/devtools': 'debug-and-test',
-  'api/react': 'react-and-preact', 'api/preact': 'react-and-preact',
-  ...Object.fromEntries(['vue', 'lit', 'rxjs', 'svelte', 'solid', 'angular'].map(name => [`api/${name}`, 'other-adapters'])),
+  'api/exome': 'exome',
+  ...Object.fromEntries(['state', 'utils', 'devtools', 'ghost', 'react', 'preact', 'vue', 'lit', 'rxjs', 'svelte', 'solid', 'angular']
+    .map(name => [`api/${name}`, `exome-${name}`])),
 };
 const routes = [{
   path: '/', title: 'Exome — State management reference',

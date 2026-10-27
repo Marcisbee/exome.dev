@@ -73,7 +73,12 @@ const groups = [
   ['Getting started', [['overview', 'Introduction'], ['install', 'Installation']]],
   ['Essentials', [['stores-and-actions', 'Stores and actions'], ['async-actions', 'Async actions'], ['nested-stores', 'Nested stores']]],
   ['Building apps', [['subscribe-and-integrate', 'Subscriptions'], ['react-and-preact', 'React and Preact'], ['other-adapters', 'Other adapters'], ['action-effects-and-middleware', 'Effects and middleware'], ['save-and-load', 'Save and load']]],
-  ['Reference', [['debug-and-test', 'Debug and test'], ['api-notes', 'API notes'], ['troubleshooting', 'Troubleshooting']]],
+  ['Reference', [
+    ['api-notes', 'API notes'], ['exome', 'exome'],
+    ...['state', 'utils', 'devtools', 'ghost', 'react', 'preact', 'vue', 'lit', 'svelte', 'solid', 'angular', 'rxjs']
+      .map(name => [`exome-${name}`, `exome/${name}`]),
+  ]],
+  ['Help', [['debug-and-test', 'Debug and test'], ['troubleshooting', 'Troubleshooting']]],
 ];
 
 export function navigation(label ) {

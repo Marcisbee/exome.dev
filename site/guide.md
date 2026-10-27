@@ -2,7 +2,7 @@
 
 State management with plain classes. Put state in properties, mutations in methods, and derived values in getters. Subscribe to the instance you render.
 
-This guide targets Exome 2.9.0. Check your installed version before using an API. For agent ingestion, read [the complete Markdown guide](/index.md) or [the index](/llms.txt).
+For agent ingestion, read [the complete Markdown guide](/index.md) or [the index](/llms.txt).
 
 ## Install
 

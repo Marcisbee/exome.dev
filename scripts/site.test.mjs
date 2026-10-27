@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 import { readFile } from 'node:fs/promises';
 import { stripTypeScriptTypes } from 'node:module';
-import { chromium } from '@playwright/test';
+import { chromium, expect } from '@playwright/test';
 import { lexer } from 'marked';
 
 const origin = 'http://127.0.0.1:4322';
@@ -159,9 +159,14 @@ test('framework buttons share one counter with pointer, keyboard, and reduced-mo
   const buttons = page.getByRole('group', { name: 'Shared counter demo' }).getByRole('button');
   for (let i = 0; i < await buttons.count(); i++) {
     await buttons.nth(i).click();
-    assert.equal(await count.textContent(), String(i + 1));
+    await expect(count).toHaveText(String(i + 1));
   }
-  const total = await buttons.count();
+  // Several flights must each increment exactly once, even if a resize interrupts them.
+  await buttons.first().click({ clickCount: 3, delay: 40 });
+  await page.setViewportSize({ width: 1100, height: 900 });
+  const total = await buttons.count() + 3;
+  await expect(count).toHaveText(String(total));
+  assert.equal(await page.locator('.counter-flight').count(), 0);
   await buttons.first().focus();
   await page.keyboard.press('Enter');
   await page.keyboard.press('Space');
@@ -171,7 +176,7 @@ test('framework buttons share one counter with pointer, keyboard, and reduced-mo
   await buttons.last().click();
   assert.equal(await count.textContent(), String(total + 3));
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
-  assert.equal(await buttons.last().locator('.counter-burst').evaluate(node => node.getAnimations().length), 0);
+  assert.equal(await page.locator('.counter-flight').count(), 0);
   assert.deepEqual(errors, []);
   await context.close();
 });

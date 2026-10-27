@@ -13,7 +13,6 @@ export function counterDemo(h, count = 0, increment) {
       h('button', { type: 'button', disabled: !increment, title: name,
         'aria-label': `Increment with ${name}`, style: `--framework-color:${color}`,
         onclick: increment },
-        h('span', { class: 'counter-burst', 'aria-hidden': 'true' }),
         h('img', { src: `/framework-icons/${id}.svg`, alt: '', width: id === 'radi' ? 32 : 26, height: id === 'radi' ? 32 : 26 })))),
     h('p', { class: 'counter-caption' }, 'Pick a framework. They all move the same count.'));
 }

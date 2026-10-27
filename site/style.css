@@ -568,14 +568,18 @@ td { color: var(--secondary); min-width: 140px; }
 .framework-buttons button:focus-visible { outline: 2px solid var(--text); outline-offset: 4px; }
 .framework-buttons button:disabled { opacity: 0.45; cursor: default; }
 .framework-buttons img { position: relative; display: block; }
-.counter-burst {
+#counter-demo { position: relative; }
+.counter-flight {
   position: absolute;
-  width: 4px;
-  height: 4px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
-  opacity: 0;
+  color: white;
+  font: 700 10px Inter, sans-serif;
   pointer-events: none;
-  box-shadow: 26px 0 var(--framework-color), -26px 0 var(--framework-color), 0 26px var(--framework-color), 0 -26px var(--framework-color), 19px 19px var(--accent), -19px -19px var(--accent), 19px -19px var(--accent), -19px 19px var(--accent);
 }
 .shared-counter .counter-caption { margin: 4px 0 0; text-align: center; color: var(--muted); font-size: 12px; }
 @media (hover: hover) and (pointer: fine) {

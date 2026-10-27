@@ -40,7 +40,7 @@ await generateStaticSite(routes, async (path, html) => {
   await writeFile(join(outDir, path), html);
 });
 for (const name of ['style.css', 'client.js', 'icon.svg', 'inter.woff2', 'ibm-plex-serif.woff2', 'jetbrains-mono.woff2',
-  'inter-license.txt', 'ibm-plex-serif-license.txt', 'jetbrains-mono-license.txt']) {
+  'inter-license.txt', 'ibm-plex-serif-license.txt', 'jetbrains-mono-license.txt', 'radi-license.txt']) {
   await cp(`site/${name}`, `${outDir}/${name}`);
 }
 await writeFile(`${outDir}/index.md`, markdown);

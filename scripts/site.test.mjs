@@ -24,7 +24,7 @@ test('the static guide exposes complete examples and working destinations withou
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
   await page.goto(origin);
-  assert.equal(await page.locator('h1').textContent(), 'Exome');
+  assert.equal(await page.locator('h1').textContent(), 'Introduction');
   const markdownLink = await page.locator('link[rel="alternate"][type="text/markdown"]').getAttribute('href');
   const response = await fetch(new URL(markdownLink, origin));
   assert.match(response.headers.get('content-type'), /text\/markdown/);
@@ -35,6 +35,7 @@ test('the static guide exposes complete examples and working destinations withou
   const destinations = await page.locator('a[href], link[href], script[src], img[src]').evaluateAll(nodes =>
     nodes.map(node => node.getAttribute('href') || node.getAttribute('src')).filter(url => !url.startsWith('https:')));
   for (const destination of new Set(destinations)) {
+    if (destination === '#') continue;
     if (destination.startsWith('#')) {
       assert.equal(await page.locator(`[id="${destination.slice(1)}"]`).count(), 1, destination);
     } else {
@@ -44,8 +45,8 @@ test('the static guide exposes complete examples and working destinations withou
   const index = await (await fetch(`${origin}/llms.txt`)).text();
   assert.match(index, /https:\/\/exome.dev\/index.md/);
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.locator('summary').click();
-  await page.getByRole('navigation', { name: 'Mobile documentation', exact: true }).getByRole('link', { name: 'Save and load', exact: true }).click();
+  await page.goto(`${origin}/#save-and-load`);
+  assert.equal(await page.locator('#save-and-load').isVisible(), true);
   assert.equal(new URL(page.url()).hash, '#save-and-load');
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
   assert.equal((await fetch(`${origin}/missing-page`)).status, 404);
@@ -72,21 +73,26 @@ test('copying and mobile navigation work in light and dark layouts', async () =>
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   await page.goto(origin);
-  const button = page.getByRole('button', { name: 'Copy code' }).first();
+  const button = page.getByRole('button', { name: 'Copy Terminal' }).first();
   await button.click();
   assert.equal(await page.evaluate(() => navigator.clipboard.readText()), 'npm install exome');
   assert.equal(await button.textContent(), 'Copied');
   for (const colorScheme of ['light', 'dark']) {
     await page.emulateMedia({ colorScheme, reducedMotion: 'reduce' });
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.locator('summary').click();
+    await page.getByRole('button', { name: 'Open navigation' }).click();
     await page.getByRole('navigation', { name: 'Mobile documentation', exact: true }).getByRole('link', { name: 'API notes', exact: true }).click();
-    assert.equal(await page.locator('details').evaluate(node => node.open), false);
+    assert.equal(await page.getByRole('dialog', { name: 'Documentation menu', includeHidden: true }).evaluate(node => node.open), false);
     assert.equal(new URL(page.url()).hash, '#api-notes');
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
-    await page.locator('summary').click();
+    await page.getByRole('button', { name: 'Open navigation' }).click();
     await page.keyboard.press('Escape');
-    assert.equal(await page.locator('details').evaluate(node => node.open), false);
+    assert.equal(await page.getByRole('dialog', { name: 'Documentation menu', includeHidden: true }).evaluate(node => node.open), false);
+    assert.equal(await page.getByRole('button', { name: 'Open navigation' }).evaluate(node => node === document.activeElement), true);
+    await page.getByRole('button', { name: 'Open navigation' }).click();
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.waitForFunction(() => !document.querySelector('dialog').open);
+    assert.equal(await page.locator('body').evaluate(node => getComputedStyle(node).overflow === 'hidden'), false);
   }
   assert.deepEqual(errors, []);
   await context.close();

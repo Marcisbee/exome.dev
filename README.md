@@ -44,13 +44,17 @@ successful deployment or reverting the site replacement and rebuilding.
 
 - `site/guide.md`: concise content and examples; use the installed Exome package
   and its source as the API authority.
-- `site/page.mjs`: Radi server components and build-time Markdown rendering.
+- `site/page.mjs` and `site/ui.mjs`: the Radi docs page shell and UI components,
+  copied and adapted for Exome. `site/content.mjs` renders the shared Markdown.
   Unsupported Markdown syntax fails the build rather than silently disappearing.
 - `site/style.css`: Radi docs layout, light/dark palettes, responsive navigation.
 - `site/client.js`: optional copy buttons and current-section indication.
 - `scripts/build.mjs`: Radi SSG routes, static assets, and legacy entry points.
 
-Typography and layout follow Radi's documentation. Inter, IBM Plex Serif, and
+The page shell, shared UI, stylesheet, and navigation script are copied from
+Radi's documentation, with Exome branding and content. Inter, IBM Plex Serif, and
 JetBrains Mono are self-hosted; their licenses ship beside the font files.
+Radi's MIT license is included in `site/radi-license.txt` and the built site.
 Exome's original icon is retained. Reading and navigating the guide requires no
-JavaScript; native mobile navigation also works without it.
+JavaScript. The floating mobile menu and copy buttons are progressive
+enhancements; the full guide remains readable without scripts.

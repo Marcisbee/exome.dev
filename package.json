@@ -8,12 +8,17 @@
     "preview": "node scripts/preview.mjs",
     "test": "npm run build && node --test"
   },
-  "engines": { "node": ">=22.18.0" },
-  "dependencies": { "radi": "0.7.1" },
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "dependencies": {
+    "radi": "0.7.1"
+  },
   "devDependencies": {
+    "@playwright/test": "1.56.1",
+    "esbuild": "0.25.12",
     "exome": "2.9.0",
     "marked": "16.4.1",
-    "shiki": "3.13.0",
-    "@playwright/test": "1.56.1"
+    "shiki": "3.13.0"
   }
 }

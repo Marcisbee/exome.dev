@@ -147,3 +147,31 @@ export { fixture };`)));
   assert.equal(counter.count, initialCount + 2);
 
 });
+
+test('framework buttons share one counter with pointer, keyboard, and reduced-motion input', async () => {
+  const context = await browser.newContext();
+  const page = await context.newPage();
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.goto(origin);
+  const count = page.getByLabel('Shared count', { exact: true });
+  assert.equal(await count.textContent(), '0');
+  const buttons = page.getByRole('group', { name: 'Shared counter demo' }).getByRole('button');
+  for (let i = 0; i < await buttons.count(); i++) {
+    await buttons.nth(i).click();
+    assert.equal(await count.textContent(), String(i + 1));
+  }
+  const total = await buttons.count();
+  await buttons.first().focus();
+  await page.keyboard.press('Enter');
+  await page.keyboard.press('Space');
+  assert.equal(await count.textContent(), String(total + 2));
+  await page.emulateMedia({ reducedMotion: 'reduce', colorScheme: 'dark' });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await buttons.last().click();
+  assert.equal(await count.textContent(), String(total + 3));
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
+  assert.equal(await buttons.last().locator('.counter-burst').evaluate(node => node.getAnimations().length), 0);
+  assert.deepEqual(errors, []);
+  await context.close();
+});

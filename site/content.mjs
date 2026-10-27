@@ -1,5 +1,6 @@
 import { createElement as h } from 'radi/server';
 import { lexer } from 'marked';
+import { counterDemo } from './counter-view.mjs';
 import { code, section } from './ui.mjs';
 
 export const slug = text => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -45,7 +46,9 @@ export async function content(markdown) {
     h('div', { class: 'intro-links' },
       h('a', { class: 'primary', href: '#install' }, 'Install Exome →'),
       h('a', { href: '/index.md' }, 'Read as Markdown ↗')),
-    await render(paragraphs.slice(1)));
+    await render(paragraphs.slice(1)),
+    h('div', { id: 'counter-demo' }, counterDemo(h)),
+    h('noscript', null, 'Enable JavaScript to try the shared counter.'));
   const sections = [];
   let heading;
   let body = [];

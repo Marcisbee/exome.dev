@@ -541,15 +541,14 @@ td { color: var(--secondary); min-width: 140px; }
 .counter-display {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+  justify-content: center;
   padding: 10px 16px;
   border-radius: 10px;
   background: var(--surface);
   color: var(--accent);
   font-weight: 600;
 }
-.counter-display output { font-size: 28px; line-height: 1.4; font-variant-numeric: tabular-nums; }
+.counter-display output { text-align: center; font-size: 28px; line-height: 1.4; font-variant-numeric: tabular-nums; }
 .framework-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; padding: 22px 0 14px; }
 .framework-buttons button {
   position: relative;
@@ -564,12 +563,12 @@ td { color: var(--secondary); min-width: 140px; }
   background: var(--framework-color);
   cursor: pointer;
   touch-action: manipulation;
+  transition: filter 120ms ease-out;
 }
 .framework-buttons button:active { transform: scale(0.94); }
 .framework-buttons button:focus-visible { outline: 2px solid var(--text); outline-offset: 4px; }
 .framework-buttons button:disabled { opacity: 0.45; cursor: default; }
 .framework-buttons img { position: relative; display: block; }
-.radi-label { position: relative; font: 600 14px Inter, sans-serif; }
 .counter-burst {
   position: absolute;
   width: 4px;
@@ -581,7 +580,7 @@ td { color: var(--secondary); min-width: 140px; }
 }
 .shared-counter .counter-caption { margin: 4px 0 0; text-align: center; color: var(--muted); font-size: 12px; }
 @media (hover: hover) and (pointer: fine) {
-  .framework-buttons button:hover { box-shadow: inset 0 0 0 3px var(--background); }
+  .framework-buttons button:enabled:hover { filter: brightness(0.94); }
 }
 @media (prefers-reduced-motion: reduce) {
   .framework-buttons button:active { transform: none; }

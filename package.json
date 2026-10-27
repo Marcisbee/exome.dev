@@ -11,7 +11,7 @@
   "engines": { "node": ">=22.18.0" },
   "dependencies": { "radi": "0.7.1" },
   "devDependencies": {
-    "exome": "2.8.1",
+    "exome": "2.9.0",
     "marked": "16.4.1",
     "shiki": "3.13.0",
     "@playwright/test": "1.56.1"

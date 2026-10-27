@@ -2,7 +2,7 @@
 
 State management with plain classes. Put state in properties, mutations in methods, and derived values in getters. Subscribe to the instance you render.
 
-This guide targets Exome 2.8.1. Check your installed version before using an API. For agent ingestion, read [the complete Markdown guide](/index.md) or [the index](/llms.txt).
+This guide targets Exome 2.9.0. Version 2.9.0 adds [Radi support](#exome-radi) for reactive children and attributes. Check your installed version before using an API. For agent ingestion, read [the complete Markdown guide](/index.md) or [the index](/llms.txt).
 
 ## Install
 
@@ -116,6 +116,7 @@ Use `useStore(store)` inside the component and keep the instance stable across r
 
 | Import | Use | Read the value |
 | --- | --- | --- |
+| `exome/radi` | `useStore(store, s => s.count)` | A subscribable value: pass it directly as a Radi child or attribute. |
 | `exome/vue` | `useStore(store)` in setup | Destructure returned refs; templates unwrap them. Nested stores need their own subscriptions. |
 | `exome/lit` | `new StoreController(this, store)` | `controller.store`; connects and disconnects with the host. |
 | `exome/svelte` | `useStore(store, s => s.count)` | A Svelte store: `$count` in a component, or `.subscribe(fn)`. |
@@ -125,7 +126,7 @@ Use `useStore(store)` inside the component and keep the instance stable across r
 
 For Solid and Angular, select the primitive or changed reference you render. Returning the same mutable store reference can suppress updates through equality checks.
 
-In 2.8.1, the Vue, Solid, Angular, and RxJS adapters do not reliably release the underlying Exome subscription on teardown. For short-lived views, use `subscribe` with your framework's explicit cleanup hook. With RxJS, return the Exome cleanup from an Observable's subscription function. Verify lifecycle behavior when upgrading.
+In 2.9.0, the Vue, Solid, Angular, and RxJS adapters do not reliably release the underlying Exome subscription on teardown. For short-lived views, use `subscribe` with your framework's explicit cleanup hook. With RxJS, return the Exome cleanup from an Observable's subscription function. Verify lifecycle behavior when upgrading.
 
 ## Action effects and middleware
 
@@ -183,7 +184,7 @@ Test stores without a UI. Use a fresh instance per test, call an action, await a
 
 ## API notes
 
-The reference below covers every public JavaScript entry point in Exome 2.8.1. Signatures show the calling contract; `T` is your store type and `R` is a selected value. Framework types come from the corresponding framework. Examples that import `./counter.js` use the Counter module in [Stores and actions](#stores-and-actions); `./todo.js` uses [Nested stores](#nested-stores).
+The reference below covers every public JavaScript entry point in Exome 2.9.0. Signatures show the calling contract; `T` is your store type and `R` is a selected value. Framework types come from the corresponding framework. Examples that import `./counter.js` use the Counter module in [Stores and actions](#stores-and-actions); `./todo.js` uses [Nested stores](#nested-stores).
 
 Use Ctrl/Cmd F to search this page. The complete reference and examples are also in [index.md](/index.md), without navigation or a JavaScript requirement.
 
@@ -270,7 +271,7 @@ See the complete [save/load example](#save-and-load). Restoration is assignment 
 | --- | --- |
 | `loading: boolean` | `true` while the latest observed invocation is pending. |
 | `error: false \| E` | `false` initially and on success; otherwise the completion error. |
-| `response: void \| R` | The latest result. In 2.8.1, falsy values become `undefined`; use the action return value if `0`, `false`, or `''` matters. |
+| `response: void \| R` | The latest result. In 2.9.0, falsy values become `undefined`; use the action return value if `0`, `false`, or `''` matters. |
 | `unsubscribe(): void` | Remove the shared observer and clear its cache entry. Call once when all consumers are finished. |
 
 Create the status before invoking the action. Status changes notify the associated store. Tracking the latest call does not cancel earlier calls or prevent their state changes.
@@ -324,6 +325,48 @@ console.log(fixture.count); // 3
 
 The ID member is private in the published TypeScript declaration. Read fixture data directly; use real stores when you need public ID helpers.
 
+## exome/radi
+
+Added in Exome 2.9.0. `useStore` creates a subscribable value for Radi children and attributes. Install Radi separately; the adapter adds no runtime dependency and is verified with Radi 0.7.1.
+
+| Export | Contract |
+| --- | --- |
+| `useStore<T extends Exome, R = T>(store: T, selector?: (state: T) => R): { subscribe(callback: (value: R) => void): () => void }` | Each subscriber receives the selected value immediately, then after store notifications. Without a selector, it receives the store itself. |
+
+```tsx
+import { createRoot } from 'radi';
+import { useStore } from 'exome/radi';
+import { counter } from './counter.js';
+
+function App() {
+  const count = useStore(counter, store => store.count);
+  const title = useStore(counter, store => `Count: ${store.count}`);
+  return <button onclick={counter.increment} title={title}>{count}</button>;
+}
+
+createRoot(document.getElementById('app')!).render(<App />);
+```
+
+Configure TypeScript JSX with `"jsx": "react-jsx"`, `"jsxImportSource": "radi"`, and `"types": ["node_modules/radi/jsx.d.ts"]`. Keep the store instance stable. Pass the subscribable directly to Radi; it is not a snapshot to destructure or an accessor to call.
+
+Radi releases each subscription when its consuming element is removed. Subscribe separately to nested Exome stores whose actions you want to observe. Async actions notify on settlement; use `update(store)` for intermediate state, as with core subscriptions. The adapter does not filter equal selected values.
+
+### Manual Radi subscriptions
+
+Outside a rendered element, call the returned cleanup yourself:
+
+```ts
+import { useStore } from 'exome/radi';
+import { counter } from './counter.js';
+
+const count = useStore(counter, store => store.count);
+const values: number[] = [];
+const stop = count.subscribe(value => values.push(value)); // current count
+counter.increment(); // another value
+stop();
+counter.increment(); // no further values collected
+```
+
 ## exome/react
 
 `useStore<T extends Exome | null | undefined>(store: T): Readonly<T>` subscribes the component and returns the same instance. It releases its subscription on unmount or when the store argument changes. Nullish input is returned unchanged. Install React separately.
@@ -370,7 +413,7 @@ const { count, increment } = useStore(counter);
 </template>
 ```
 
-Templates unwrap refs. Subscribe separately to nested stores. In 2.8.1 the adapter does not register its Exome cleanup with Vue; use `subscribe` plus `onScopeDispose` for short-lived views requiring reliable teardown.
+Templates unwrap refs. Subscribe separately to nested stores. In 2.9.0 the adapter does not register its Exome cleanup with Vue; use `subscribe` plus `onScopeDispose` for short-lived views requiring reliable teardown.
 
 ## exome/lit
 
@@ -423,7 +466,7 @@ export function CounterView() {
 }
 ```
 
-Select a primitive or changed reference: the default selector returns the same mutable instance, so signal equality can suppress updates. In 2.8.1 its cleanup callback returns the unsubscribe function instead of calling it. For short-lived owners, use core `subscribe` with `onCleanup(stop)`.
+Select a primitive or changed reference: the default selector returns the same mutable instance, so signal equality can suppress updates. In 2.9.0 its cleanup callback returns the unsubscribe function instead of calling it. For short-lived owners, use core `subscribe` with `onCleanup(stop)`.
 
 ## exome/angular
 
@@ -445,13 +488,13 @@ export class CounterView {
 }
 ```
 
-Select a primitive or changed reference so signal equality detects updates. In 2.8.1 the adapter does not register destruction cleanup correctly. For short-lived components, subscribe explicitly and register the returned cleanup with `DestroyRef.onDestroy`.
+Select a primitive or changed reference so signal equality detects updates. In 2.9.0 the adapter does not register destruction cleanup correctly. For short-lived components, subscribe explicitly and register the returned cleanup with `DestroyRef.onDestroy`.
 
 ## exome/rxjs
 
 `observableFromExome<T extends Exome = Exome>(store: T): Observable<T>` emits the instance immediately on subscription and after updates. Values are the same mutable instance, not snapshots. Install RxJS separately; map to a field before using `distinctUntilChanged`.
 
-In 2.8.1 the built-in Observable does not return the Exome teardown. For subscriptions that must be released, use this equivalent with explicit cleanup:
+In 2.9.0 the built-in Observable does not return the Exome teardown. For subscriptions that must be released, use this equivalent with explicit cleanup:
 
 ```ts
 import { Observable, map, distinctUntilChanged } from 'rxjs';

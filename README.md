@@ -1,6 +1,6 @@
 # Exome documentation
 
-A static reference for Exome 2.8.1, generated with Radi SSG. The website and
+A static reference for Exome 2.9.0, generated with Radi SSG. The website and
 `/index.md` share `site/guide.md`; `/llms.txt` points agents to the complete guide.
 
 ## Develop

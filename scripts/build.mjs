@@ -43,7 +43,7 @@ for (const name of ['style.css', 'client.js', 'icon.svg', 'inter.woff2', 'ibm-pl
   await cp(`site/${name}`, `${outDir}/${name}`);
 }
 await writeFile(`${outDir}/index.md`, markdown);
-await writeFile(`${outDir}/llms.txt`, '# Exome\n\n> Class-based state management. Reference for Exome 2.8.1.\n\n## Documentation\n\n- [Complete guide](https://exome.dev/index.md): Installation, actions, subscriptions, adapters, persistence, API notes, and limitations.\n- [HTML guide](https://exome.dev/): The same content for browser readers.\n');
+await writeFile(`${outDir}/llms.txt`, '# Exome\n\n> Class-based state management. Reference for Exome 2.9.0.\n\n## Documentation\n\n- [Complete guide](https://exome.dev/index.md): Installation, actions, subscriptions, adapters, persistence, API notes, and limitations.\n- [HTML guide](https://exome.dev/): The same content for browser readers.\n');
 await writeFile(`${outDir}/CNAME`, 'exome.dev\n');
 await writeFile(`${outDir}/robots.txt`, 'User-agent: *\nAllow: /\nSitemap: https://exome.dev/sitemap.xml\n');
 await writeFile(`${outDir}/sitemap.xml`, '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://exome.dev/</loc></url></urlset>\n');

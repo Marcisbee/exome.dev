@@ -139,5 +139,11 @@ export { status };`)));
   const ghostModule = await import(moduleURL(resolveImports(`${example('exome/ghost')}
 export { fixture };`)));
   assert.equal(ghostModule.fixture.count, 3);
+  const counterURL = moduleURL(resolveImports(example('Stores and actions')));
+  const radiExample = resolveImports(example('Manual Radi subscriptions')).replace("'./counter.js'", JSON.stringify(counterURL));
+  const initialCount = counter.count;
+  const radiModule = await import(moduleURL(`${radiExample}\nexport { values };`));
+  assert.deepEqual(radiModule.values, [initialCount, initialCount + 1]);
+  assert.equal(counter.count, initialCount + 2);
 
 });
